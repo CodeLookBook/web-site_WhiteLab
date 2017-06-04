@@ -1,22 +1,39 @@
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+//*************************************************************************
+// IMPORT ALL PROJECT'S JAVASCRIPT DEPENDENCIES WHICH INCLUDES VUE AND
+// OTHER LIBRARIES
+//*************************************************************************
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+//*************************************************************************
+// LIBRARIES IMPORT
+//*************************************************************************
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import VueRouter    from "vue-router"
+import Vuex         from 'vuex'
 
-Vue.component('example', require('./components/Example.vue'));
+//*************************************************************************
+// APP COMPONENT IMPORT
+//*************************************************************************
 
-const app = new Vue({
-    el: '#app'
-});
+import App from "./components/app.vue"
+
+//*************************************************************************
+// APP ROUTER OBJECT
+//*************************************************************************
+
+import RouterSettings from "./router/settings"
+
+//*************************************************************************
+// APP STORE OBJECT IMPORT
+//*************************************************************************
+
+import Store from "./store/store"
+
+//*************************************************************************
+// APP VUE VIEW OBJECT
+//*************************************************************************
+
+App.router = new VueRouter(RouterSettings);
+App.store  = new Vuex.Store(Store);
+const app = new Vue(App);

@@ -1,27 +1,12 @@
-
-window._ = require('lodash');
-
-/**
- * We'll load jQuery and the Bootstrap jQuery plugin which provides support
- * for JavaScript based Bootstrap features such as modals and tabs. This
- * code may be modified to fit the specific needs of your application.
- */
-
-try {
-    window.$ = window.jQuery = require('jquery');
-
-    require('bootstrap-sass');
-} catch (e) {}
-
 /**
  * We'll load the axios HTTP library which allows us to easily issue requests
  * to our Laravel back-end. This library automatically handles sending the
  * CSRF token as a header based on the value of the "XSRF" token cookie.
  */
 
-window.axios = require('axios');
+//window.axios = require('axios');
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+// window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 /**
  * Next we will register the CSRF Token as a common header with Axios so that
@@ -29,13 +14,80 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * a simple convenience so we don't have to attach every token manually.
  */
 
-let token = document.head.querySelector('meta[name="csrf-token"]');
+//let token = document.head.querySelector('meta[name="csrf-token"]');
 
-if (token) {
+/*if (token) {
     window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
 } else {
     console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
-}
+}*/
+
+/**
+ * Vue (pronounced /vjuː/, like view) is a progressive framework for building user
+ * interfaces.
+ */
+
+window.Vue = require('vue');
+
+/**
+ * Vue-router
+ */
+import VueRouter from "vue-router"
+window.Vue.use(VueRouter);
+
+/**
+ * Vue-resource provides services for making web requests and handle
+ * responses using a XMLHttpRequest or JSONP
+ */
+import VueResource from 'vue-resource'
+window.Vue.use(VueResource);
+
+Vue.http.interceptors.push((request, next) => {
+    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken); //ToDo: Change to JWT Auth Token
+    request.headers.set('X-Requested-With', 'XMLHttpRequest');
+    next();
+});
+
+/**
+ * Vuex is a state management pattern + library for Vue.js applications. It
+ * serves as a centralized store for all the components in an application,
+ * with rules ensuring that the state can only be mutated in a predictable
+ * fashion.
+ */
+
+import Vuex from 'vuex'
+window.Vue.use(Vuex);
+
+/**
+ * Velocity is an animation engine with the same API as jQuery's $.animate().
+ * It works with and without jQuery. It's incredibly fast, and it features
+ * color animation, transforms, loops, easings, SVG support, and scrolling.
+ * It is the best of jQuery and CSS transitions combined.
+ */
+
+window.Velocity = require("velocity-animate");
+
+/**
+ * A Vue.js component for sharing links to social networks, work with
+ * Vue.js 1.X or 2.X
+ */
+
+const SocialSharing = require('vue-social-sharing');
+window.Vue.use(SocialSharing);
+
+/**
+ * Element, a Vue 2.0 based component library for developers, designers
+ * and product managers
+ */
+
+import ElementUI from 'element-ui'
+//import locale from 'element-ui/lib/locale/lang/ru-RU'
+import 'element-ui/lib/theme-default/index.css'
+//window.Vue.use(ElementUI, { locale })
+window.Vue.use(ElementUI,)
+
+
+
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening

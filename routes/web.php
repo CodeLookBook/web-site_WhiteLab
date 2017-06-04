@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/{section?}', function () {
+    return view('partials/app-partial');
+})->where('section','(?:(?<!api).)*(?<!api)');
