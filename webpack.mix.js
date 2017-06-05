@@ -12,5 +12,10 @@ const { mix } = require('laravel-mix');
  */
 
 mix.js('resources/assets/js/app.js', 'public/js')
+    .mix.copy('node_modules/normalize.css/normalize.css', 'resources/assets/css/normalize.css')
     .sass('resources/assets/sass/app.scss', 'public/css')
+    .styles([
+        'resources/assets/css/normalize.css',
+        'public/css/app.css'
+    ], 'public/css/app.css')
     .mix.browserSync({ proxy: 'whitelab.dev' });

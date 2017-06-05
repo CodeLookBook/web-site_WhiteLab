@@ -17815,6 +17815,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
 
 
 //*************************************************************************
@@ -17950,6 +17952,12 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_2_vuex__["a" /* default */]);
 window.Velocity = __webpack_require__(84);
 
 /**
+ * Normalize.css is a small CSS file that provides better cross-browser
+ * consistency in the default styling of HTML elements. It’s a modern,
+ * HTML5-ready, alternative to the traditional CSS reset.
+ */
+
+/**
  * A Vue.js component for sharing links to social networks, work with
  * Vue.js 1.X or 2.X
  */
@@ -17989,11 +17997,11 @@ window.Vue.use(__WEBPACK_IMPORTED_MODULE_3_element_ui___default.a
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pages_home_home_page_vue__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pages_home_home_page_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pages_home_home_page_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pages_home_page_vue__ = __webpack_require__(87);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__components_pages_home_page_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__components_pages_home_page_vue__);
 
 
-/* harmony default export */ __webpack_exports__["a"] = ([{ path: "/", name: "AppPage", component: __WEBPACK_IMPORTED_MODULE_0__components_pages_home_home_page_vue___default.a }, { path: "/home", name: "HomePage", component: __WEBPACK_IMPORTED_MODULE_0__components_pages_home_home_page_vue___default.a }]);
+/* harmony default export */ __webpack_exports__["a"] = ([{ path: "/", name: "AppPage", component: __WEBPACK_IMPORTED_MODULE_0__components_pages_home_page_vue___default.a }, { path: "/home", name: "HomePage", component: __WEBPACK_IMPORTED_MODULE_0__components_pages_home_page_vue___default.a }]);
 
 /***/ }),
 /* 56 */
@@ -57168,9 +57176,9 @@ var Component = __webpack_require__(15)(
   /* cssModules */
   null
 )
-Component.options.__file = "C:\\xampp\\htdocs\\WebSite_WhiteLab\\resources\\assets\\js\\components\\pages\\home\\home-page.vue"
+Component.options.__file = "C:\\xampp\\htdocs\\WebSite_WhiteLab\\resources\\assets\\js\\components\\pages\\home\\page.vue"
 if (Component.esModule && Object.keys(Component.esModule).some(function (key) {return key !== "default" && key !== "__esModule"})) {console.error("named exports are not supported in *.vue files.")}
-if (Component.options.functional) {console.error("[vue-loader] home-page.vue: functional components are not supported with templates, they should use render functions.")}
+if (Component.options.functional) {console.error("[vue-loader] page.vue: functional components are not supported with templates, they should use render functions.")}
 
 /* hot reload */
 if (false) {(function () {
@@ -57179,9 +57187,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-66cd1b54", Component.options)
+    hotAPI.createRecord("data-v-cfc85470", Component.options)
   } else {
-    hotAPI.reload("data-v-66cd1b54", Component.options)
+    hotAPI.reload("data-v-cfc85470", Component.options)
   }
 })()}
 
@@ -57250,13 +57258,13 @@ module.exports={render:function (){var _vm=this;var _h=_vm.$createElement;var _c
     staticClass: "div"
   }, [_c('h1', [_vm._v("HOME PAGE")]), _vm._m(0), _c('el-button', [_vm._v("Run")])], 1)
 },staticRenderFns: [function (){var _vm=this;var _h=_vm.$createElement;var _c=_vm._self._c||_h;
-  return _c('ul', [_c('li', [_vm._v("Vue.js was installed;")]), _c('li', [_vm._v("Vue-Router was installed;")]), _c('li', [_vm._v("Vue-Resource was installed;")]), _c('li', [_vm._v("Vuex was installed;")]), _c('li', [_vm._v("Velocity was installed;")]), _c('li', [_vm._v("Element-ui was installed;")]), _c('li', [_vm._v("Bootstrap file is configurated")]), _c('li', [_vm._v("Router object was created and connected;")]), _c('li', [_vm._v("Vuex Storage was created and connected;")]), _c('li', [_vm._v("Browsersync Reloading was configurates;")])])
+  return _c('ul', [_c('li', [_vm._v("Vue.js was installed;")]), _c('li', [_vm._v("Vue-Router was installed;")]), _c('li', [_vm._v("Vue-Resource was installed;")]), _c('li', [_vm._v("Vuex was installed;")]), _c('li', [_vm._v("Velocity was installed;")]), _c('li', [_vm._v("Element-ui was installed;")]), _c('li', [_vm._v("Bootstrap file is configurated")]), _c('li', [_vm._v("Router object was created and connected;")]), _c('li', [_vm._v("Vuex Storage was created and connected;")]), _c('li', [_vm._v("Browsersync Reloading was configurated;")]), _c('li', [_vm._v("JWT Auth was installed,")]), _c('li', [_vm._v("Normalize.css was installed")])])
 }]}
 module.exports.render._withStripped = true
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-     require("vue-hot-reload-api").rerender("data-v-66cd1b54", module.exports)
+     require("vue-hot-reload-api").rerender("data-v-cfc85470", module.exports)
   }
 }
 
@@ -59193,13 +59201,13 @@ var content = __webpack_require__(60);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
-var update = __webpack_require__(25)("5ea21c53", content, false);
+var update = __webpack_require__(25)("84220d18", content, false);
 // Hot Module Replacement
 if(false) {
  // When the styles change, update the <style> tags
  if(!content.locals) {
-   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-66cd1b54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home-page.vue", function() {
-     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-66cd1b54\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./home-page.vue");
+   module.hot.accept("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cfc85470\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page.vue", function() {
+     var newContent = require("!!../../../../../../node_modules/css-loader/index.js!../../../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"id\":\"data-v-cfc85470\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../../../node_modules/sass-loader/lib/loader.js!../../../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./page.vue");
      if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
      update(newContent);
    });

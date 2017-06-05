@@ -222,7 +222,11 @@
 
 @section('Styles')
 
-    <!-- Styles -->
+
+    <!-- Normalize styles-->
+    <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
+
+    <!--App Styles -->
     <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
 
     <!-- Google map-->
@@ -235,9 +239,11 @@
         }
     </style>
 
+    <!-- Custom styles -->
     <style>
 
         html, body {
+            overflow: hidden;
             width:      100%;
             height:     100%;
         }

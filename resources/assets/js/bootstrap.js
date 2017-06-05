@@ -68,6 +68,13 @@ window.Vue.use(Vuex);
 window.Velocity = require("velocity-animate");
 
 /**
+ * Normalize.css is a small CSS file that provides better cross-browser
+ * consistency in the default styling of HTML elements. It’s a modern,
+ * HTML5-ready, alternative to the traditional CSS reset.
+ */
+
+
+/**
  * A Vue.js component for sharing links to social networks, work with
  * Vue.js 1.X or 2.X
  */
