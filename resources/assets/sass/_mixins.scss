@@ -1,0 +1,42 @@
+
+//GRID HELPER
+
+@mixin m($name, $max: 0, $min: 0) {
+
+  // Max Width
+  @if $name == 'maxW' {
+    @media (max-width: $max) { @content; }
+  }
+
+  // Min Width
+  @if $name == 'minW' {
+    @media (min-width: $min) { @content; }
+  }
+
+  // MaxH
+  @if $name == 'maxH' {
+    @media (max-height: $max) { @content; }
+  }
+  // MinH
+  @if $name == 'minH' {
+    @media (min-height: $min) { @content; }
+  }
+
+  //Between MinW and MaxW
+
+  @if $name == 'betweenW' {
+    @media (min-width: $min) and (max-width: $max ){
+      @content;
+    }
+  }
+
+}
+
+//TRANSITION HELPER
+@mixin t($transition...) {
+  -moz-transition:    $transition;
+  -o-transition:      $transition;
+  -webkit-transition: $transition;
+  -ms-transition:     $transition;
+  transition:         $transition;
+}
