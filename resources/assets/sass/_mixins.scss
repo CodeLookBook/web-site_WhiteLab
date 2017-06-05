@@ -1,35 +1,34 @@
 
 //GRID HELPER
 
-@mixin m($name, $max: 0, $min: 0) {
+@mixin position($position: static, $t: null, $l: null, $r: null, $b: null){
+  $top   : $t;
+  $left  : $l;
+  $right : $r;
+  $bottom: $b;
 
-  // Max Width
-  @if $name == 'maxW' {
-    @media (max-width: $max) { @content; }
-  }
+  @if     ($position == a       ) {position: absolute}
+  @else if($position == absolute) {position: absolute}
+  @else if($position == s       ) {position: sticky  }
+  @else if($position == sticky  ) {position: sticky  }
+  @else if($position == r       ) {position: relative}
+  @else if($position == relative) {position: relative}
+  @else if($position == f       ) {position: fixed   }
+  @else if($position == fixed   ) {position: fixed   }
+  @else                           {position: static  }
 
-  // Min Width
-  @if $name == 'minW' {
-    @media (min-width: $min) { @content; }
-  }
+  @if $top    != null {top:    $top    };
+  @if $left   != null {left:   $left   };
+  @if $right  != null {right:  $right  };
+  @if $bottom != null {bottom: $bottom };
+}
 
-  // MaxH
-  @if $name == 'maxH' {
-    @media (max-height: $max) { @content; }
-  }
-  // MinH
-  @if $name == 'minH' {
-    @media (min-height: $min) { @content; }
-  }
+@mixin size($w: null, $h: null){
+  $width:  $w;
+  $height: $h;
 
-  //Between MinW and MaxW
-
-  @if $name == 'betweenW' {
-    @media (min-width: $min) and (max-width: $max ){
-      @content;
-    }
-  }
-
+  @if $width   != null {width:  $width};
+  @if $height  != null {height: $height};
 }
 
 //TRANSITION HELPER
