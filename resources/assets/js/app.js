@@ -16,7 +16,7 @@ import Vuex         from 'vuex'
 // APP COMPONENT IMPORT
 //*************************************************************************
 
-import App from "./components/app.vue"
+import App from "./components/app/app.vue"
 
 //*************************************************************************
 // APP ROUTER OBJECT
