@@ -1,3 +1,9 @@
-/**
- * Created by mirtg_000 on 06.06.2017.
- */
+function Language(abbriviation = null, name = null, id = null) {
+
+    this.abbriviation = abbriviation;
+    this.name = name;
+    this.id   = id;
+
+}
+
+export {Language}
