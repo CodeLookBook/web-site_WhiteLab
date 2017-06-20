@@ -1,5 +1,0 @@
-class CommandParams {
-
-}
-
-export {CommandParams};

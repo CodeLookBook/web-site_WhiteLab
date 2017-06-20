@@ -134,14 +134,6 @@
     // IMPORT UTILITIES
     //*************************************************************************
 
-    import {AppClientSingleton}
-            from "../../entities/commands/client/AppClientSingleton";
-    import {LanguageCommandParams}
-            from "../../entities/commands/dto/LanguageCommandParams";
-    import {LanguagesEnum}
-            from "../../entities/languages/enum/LanguagesEnum";
-    import {HomePageButtonsFactory}
-            from "../../entities/ui/Page-buttons/HomePageButtonsFactory";
 
     //*************************************************************************
     // IMPORT CHILD COMPONENTS
@@ -230,48 +222,6 @@
         //*********************************************************************
 
         methods:{
-
-            /**
-             * Set Russian language app UI .
-             * @param {*} e MenuItem instance
-              */
-            setRussianLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setRussianLanguage(
-                    new LanguageCommandParams(LanguagesEnum.RUSSIAN.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-            },
-
-            /**
-             * Set English language app UI .
-             * @param {*} e MenuItem instance
-             */
-            setEnglishLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setEnglishLanguage(
-                    new LanguageCommandParams(LanguagesEnum.ENGLISH.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-
-            },
-
-            /**
-             * Set Slovak language app UI .
-             * @param {*} e MenuItem instance
-             */
-            setSlovakLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setSlovakLanguage(
-                    new LanguageCommandParams(LanguagesEnum.SLOVAK.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-
-            },
-
         },
 
         //*********************************************************************
@@ -280,17 +230,6 @@
 
         mounted(){
 
-            // Create this.appClient object.
-            this.appClient = AppClientSingleton.getInstance();
-
-            /* Set Russian as a default language.*/
-            {
-                let id = LanguagesEnum.RUSSIAN.ID,
-                    params = new LanguageCommandParams(id);
-
-                this.settings.uiLanguage = this.appClient.
-                    setRussianLanguage(params);
-            }
         },
 
         //*********************************************************************
