@@ -51,7 +51,7 @@
     // CHILD COMPONENTS IMPORT
     //*************************************************************************
 
-    import {Browser} from "../../entities/DTO/Browser"
+    import {Browser} from "./Browser"
 
     //*************************************************************************
     // COMPONENT
