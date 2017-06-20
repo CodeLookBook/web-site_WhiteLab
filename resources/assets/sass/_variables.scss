@@ -2,5 +2,8 @@
 // Body
 $body-bg: #f5f8fa;
 
-// Top-navbar
-$top-navbar-height: 4em;
+// APP-LAYOUT
+$top-navbar-slot-height: 4em;
+
+// APP-TOP-NAVBAR
+$top-navbar-height: $top-navbar-slot-height;

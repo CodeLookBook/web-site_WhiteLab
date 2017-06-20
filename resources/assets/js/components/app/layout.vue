@@ -38,7 +38,7 @@
 
             .TOP-NAVBAR-SLOT
                 +position(r, $t:0, $l:0)
-                +size    (100%, $top-navbar-height)
+                +size    (100%, $top-navbar-slot-height)
 
             .CONTENT-SLOT
                 +position(r, $t:0, $l:0)

@@ -23,6 +23,15 @@
 }*/
 
 /**
+ * WeakMap is a collection slated to be introduced to JavaScript with
+ * EcmaScript 6. It provides a mapping from objects to values, but allows
+ * any entry to be garbage collected if the key is provably lost.
+ */
+
+window.WeakMap = require("weak-map");
+
+
+/**
  * Vue (pronounced /vjuː/, like view) is a progressive framework for building user
  * interfaces.
  */
@@ -66,13 +75,6 @@ window.Vue.use(Vuex);
  */
 
 window.Velocity = require("velocity-animate");
-
-/**
- * Normalize.css is a small CSS file that provides better cross-browser
- * consistency in the default styling of HTML elements. It’s a modern,
- * HTML5-ready, alternative to the traditional CSS reset.
- */
-
 
 /**
  * A Vue.js component for sharing links to social networks, work with

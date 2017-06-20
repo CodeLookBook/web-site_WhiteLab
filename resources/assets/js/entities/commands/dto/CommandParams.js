@@ -1,0 +1,5 @@
+class CommandParams {
+
+}
+
+export {CommandParams};
