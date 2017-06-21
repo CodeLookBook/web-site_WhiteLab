@@ -1,0 +1,15 @@
+[ignore]
+.*/app/.*
+.*/bootstrap/.*
+.*/database/.*
+.*/node_modules/.*
+.*/public/.*
+.*/routes/.*
+.*/storage/.*
+.*/tests/.*
+.*/vendor/.*
+[include]
+[libs]
+
+[options]
+unsafe.enable_getters_and_setters=true;

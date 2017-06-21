@@ -1,3 +1,4 @@
+/* @flow */
 <template lang="pug">
 
     layout
@@ -129,179 +130,46 @@
 
 </style>
 <script>
-
-    //*************************************************************************
-    // IMPORT UTILITIES
-    //*************************************************************************
-
-    import {AppClientSingleton}
-            from "../../entities/commands/client/AppClientSingleton";
-    import {LanguageCommandParams}
-            from "../../entities/commands/dto/LanguageCommandParams";
-    import {LanguagesEnum}
-            from "../../entities/languages/enum/LanguagesEnum";
-    import {HomePageButtonsFactory}
-            from "../../entities/ui/Page-buttons/HomePageButtonsFactory";
-
-    //*************************************************************************
-    // IMPORT CHILD COMPONENTS
-    //*************************************************************************
-
     import Layout
-            from './layout.vue';
-    import ElMenu
-            from "../../../../../node_modules/element-ui/packages/menu/src/menu";
+        from "./layout.vue";
+    import ElMenu from "../../../../../node_modules/element-ui/packages/menu/src/menu";
     import ElMenuItem
-            from "../../../../../node_modules/element-ui/packages/menu/src/menu-item";
+        from "../../../../../node_modules/element-ui/packages/menu/src/menu-item";
     import ElButton
-            from "../../../../../node_modules/element-ui/packages/button/src/button";
-
-    //*************************************************************************
-    // COMPONENT
-    //*************************************************************************
+        from "../../../../../node_modules/element-ui/packages/button/src/button";
 
     export default {
 
-        //*********************************************************************
-        // MOUNT ELEMENT
-        //*********************************************************************
-
         el: "#app",
 
-        //*********************************************************************
-        // PROPERTIES
-        //*********************************************************************
-
-
-        //*********************************************************************
-        // DATA FIELDS
-        //*********************************************************************
-
-        data(){
+        data () {
             return {
-                //App manager.
+                // App manager.
                 appClient: null,
 
-                //App settings
-                settings:{
-                    uiLanguage: null,   //UI language
-                    uiElements: null,   //page buttons
-                },
+                // App settings
+                settings: {
+                    uiLanguage: null, // UI language
+                    uiElements: null // page buttons
+                }
             };
         },
 
-        //*********************************************************************
-        // COMPUTED FIELDS
-        //*********************************************************************
+        watch: {
 
-
-        //*********************************************************************
-        // WATCHED FIELDS
-        //*********************************************************************
-
-        watch:{
-            "settings.uiLanguage"(newVal, oldVal){
-
-    /*            let appLanguage = newVal,
-                    routeName   = this.$router.currentRoute.name,
-                    factory     = new HomePageButtonsFactory(),
-                    uiButtons;
-
-                switch (routeName) {
-                    case 'app':
-                    case 'home':
-                        uiButtons = factory.create(appLanguage.ID);
-                        break;
-
-                    default:
-                        throw new Error("Can't create app buttons for" +
-                            "the selected router name. Router is undefined");
-                }
-
-                this.settings.uiElements = uiButtons;
-
-                console.log('app => watch => settings.uiLanguage() => uiButtons: ');
-                console.log(uiButtons);*/
+        },
+        methods: {
+            methodss () {
             }
         },
-
-        //*********************************************************************
-        // METHODS
-        //*********************************************************************
-
-        methods:{
-
-            /**
-             * Set Russian language app UI .
-             * @param {*} e MenuItem instance
-              */
-            setRussianLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setRussianLanguage(
-                    new LanguageCommandParams(LanguagesEnum.RUSSIAN.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-            },
-
-            /**
-             * Set English language app UI .
-             * @param {*} e MenuItem instance
-             */
-            setEnglishLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setEnglishLanguage(
-                    new LanguageCommandParams(LanguagesEnum.ENGLISH.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-
-            },
-
-            /**
-             * Set Slovak language app UI .
-             * @param {*} e MenuItem instance
-             */
-            setSlovakLanguage(e){
-
-                this.settings.uiLanguage = this.appClient.setSlovakLanguage(
-                    new LanguageCommandParams(LanguagesEnum.SLOVAK.ID)
-                );
-
-                console.log(this.settings.uiLanguage)
-
-            },
+        mounted () {
 
         },
-
-        //*********************************************************************
-        // LIFE HOOKS
-        //*********************************************************************
-
-        mounted(){
-
-            // Create this.appClient object.
-            this.appClient = AppClientSingleton.getInstance();
-
-            /* Set Russian as a default language.*/
-            {
-                let id = LanguagesEnum.RUSSIAN.ID,
-                    params = new LanguageCommandParams(id);
-
-                this.settings.uiLanguage = this.appClient.
-                    setRussianLanguage(params);
-            }
-        },
-
-        //*********************************************************************
-        // CHILD COMPONENTS
-        //*********************************************************************
-
-        components:{
+        components: {
             ElButton,
             ElMenuItem,
             ElMenu,
-            Layout,
+            Layout
         }
 
     };
