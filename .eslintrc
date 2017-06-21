@@ -58,7 +58,10 @@
         "ArrowFunctionExpression": true
       }
     }],
-    "space-before-function-paren": ["error", "never"]
+    "space-before-function-paren": ["error", "never"],
+    "padded-blocks": ["error", { "classes": "always" }],
+    "spaced-comment": ["error", "always", { "exceptions": ["-"] }],
+    no-trailing-spaces: ["error", { "skipBlankLines": true }]
   },
 
   "settings": {

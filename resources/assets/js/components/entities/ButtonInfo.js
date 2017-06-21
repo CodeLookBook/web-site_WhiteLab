@@ -2,24 +2,37 @@
 
 import { Language } from "./Language";
 
+// ----------------------------------------------------------------------------
+// ButtonInfo class
+// ----------------------------------------------------------------------------
+
 /**
- * ButtonInfo class.
- * Contain main information about button.
- * @property {Language} language
- * @property {string} name
- * @property {number} id
+ * Contains information about button.
+ * @property {Language} language Language class instance.
+ * @property {string} name Language name.
+ * @property {number} id Language identifier.
  */
 class ButtonInfo {
+
+    // ------------------------------------------------------------------------
+    // Constructor
+    // ------------------------------------------------------------------------
+
     /**
-     * @param {Language} language
-     * @param {string} name
-     * @param {string} id
+     * @param {Language} language Language class instance.
+     * @param {string} name Language name.
+     * @param {string} id Language identifier.
      */
     constructor(language: Language, name: string, id: number) {
+        // Init private variables.
         _set.call(_language, this, language);
         _set.call(_name, this, name);
         _set.call(id, this, id);
     }
+
+    // ------------------------------------------------------------------------
+    // Public getters and setters.
+    // ------------------------------------------------------------------------
 
     /**
      * Store information about button language.
@@ -34,6 +47,8 @@ class ButtonInfo {
      * @return {Language}
      */
     get language(): Language {
+
+        // Retrieve _language  - private property.
         return _get.call(_language, this);
     }
 
@@ -66,7 +81,12 @@ class ButtonInfo {
     get id(): number {
         return _get.call(_id, this);
     }
+
 }
+
+// ----------------------------------------------------------------------------
+// Private functions
+// ----------------------------------------------------------------------------
 
 /**
  * Gets class properties from WeakMap
@@ -83,6 +103,10 @@ const _get = WeakMap.prototype.get;
  * @private
  */
 const _set = WeakMap.prototype.set;
+
+// ----------------------------------------------------------------------------
+// Private variables
+// ----------------------------------------------------------------------------
 
 /**
  * Stores button language.
