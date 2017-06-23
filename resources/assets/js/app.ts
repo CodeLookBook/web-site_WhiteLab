@@ -3,37 +3,27 @@
 // OTHER LIBRARIES
 //*************************************************************************
 
-require('./bootstrap');
+import './bootstrap';
 
 //*************************************************************************
 // LIBRARIES IMPORT
 //*************************************************************************
 
-import VueRouter    from "vue-router"
-import Vuex         from 'vuex'
+import Vue from "vue";
 
 //*************************************************************************
 // APP COMPONENT IMPORT
 //*************************************************************************
 
-import App from "./components/app/app.vue"
-
-//*************************************************************************
-// APP ROUTER OBJECT
-//*************************************************************************
-
-import RouterSettings from "./router/settings"
+import app from "./components/app/app.vue";
 
 //*************************************************************************
 // APP STORE OBJECT IMPORT
 //*************************************************************************
 
-import Store from "./store/store"
-
 //*************************************************************************
 // APP VUE VIEW OBJECT
 //*************************************************************************
 
-App.router = new VueRouter(RouterSettings);
-App.store  = new Vuex.Store(Store);
-const app = new Vue(App);
+
+new Vue(app);
