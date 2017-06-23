@@ -217,7 +217,7 @@
 
 @section('VueJs')
     <!-- Vue Js Files -->
-    <script src="{{ mix('js/app.js')}}" defer></script>
+    <script src="{{ mix('js/app.js') }}" defer></script>
 @endsection
 
 @section('Styles')
