@@ -1,27 +1,27 @@
-// @flow
-
 // ----------------------------------------------------------------------------
 // Browser class
 // ----------------------------------------------------------------------------
 
 /**
- * Browser.
- * @class
- * @property {number } clientWidth
- * @property {number } clientHeight
+ * Browser class.
+ * Stores information about browser state.
  */
 class Browser {
+
+    // ------------------------------------------------------------------------
+    // Private properties
+    // ------------------------------------------------------------------------
+
+    private _clientWidth : number = 0;
+    private _clientHeight: number = 0;
+
     // ------------------------------------------------------------------------
     // Constructor
     // ------------------------------------------------------------------------
 
-    /**
-     * @param {number } [clientWidth]
-     * @param {number } [clientHeight]
-     */
-    constructor(clientWidth: number, clientHeight: number) {
-        _set.call(_clientWidth, this, clientWidth);
-        _set.call(_clientHeight, this, clientHeight);
+    constructor(clientWidth: number = 0, clientHeight: number = 0) {
+        this._clientWidth  = clientWidth;
+        this._clientHeight = clientHeight;
     }
 
     // ------------------------------------------------------------------------
@@ -29,110 +29,37 @@ class Browser {
     // ------------------------------------------------------------------------
 
     /**
-     * Set browser client width.
-     * @param {number} width Browser client width.
+     * @param width - Browser client width.
      */
-    set clientWidth(width: number):void {
-        _set.call(_clientWidth, this, width);
+    set clientWidth(width: number){
+        this._clientWidth = width;
     }
+
     /**
      * Return browser client width.
-     * @return {number} - Browser client height
      */
     get clientWidth():number {
-
-        const clientWidth = _get.call(_clientWidth, this);
-
-        if (typeof clientWidth !== "number") {
-            throw new TypeError();
-        }
-
-        return clientWidth;
+        return this._clientWidth;
     }
 
     /**
-     * Set browser client height.
-     * @param {number} height Browser client height.
+     * @param height - Browser client height.
      */
-    set clientHeight(height: number):void {
-        _set.call(_clientHeight, this, height);
+    set clientHeight(height: number){
+        this._clientHeight = height;
     }
 
     /**
      * Return browser client height.
-     * @return {number}
      */
     get clientHeight():number {
-
-        const clientHeight = _get.call(_clientHeight, this);
-
-        if (typeof clientHeight !== "number") {
-            throw new TypeError();
-        }
-
-        return clientHeight;
+        return this._clientHeight;
     }
-
 }
 
 // ----------------------------------------------------------------------------
-// Private functions
+// Browser class
 // ----------------------------------------------------------------------------
 
-/**
- * Gets _clientHeight & clientWidth class properties from WeakMap
- * @function
- * @return {*}
- * @private
- */
-const _get = WeakMap.prototype.get;
-
-/**
- * Stores _clientHeight & clientWidth class properties from WeakMap
- * @function
- * @return {*}
- * @private
- */
-const _set = WeakMap.prototype.set;
-
-// ----------------------------------------------------------------------------
-// Private variables
-// ----------------------------------------------------------------------------
-
-/**
- * Stores browser client width.
- * @type {WeakMap}
- * @private
- */
-const _clientWidth  = new WeakMap();
-
-/**
- * Stores browser client height.
- * @type {WeakMap}
- * @private
- */
-const _clientHeight = new WeakMap();
-
-// ----------------------------------------------------------------------------
-// Export
-// ----------------------------------------------------------------------------
-
-/**
- * sdfsdf
- */
-class MyT {
-
-    t:number;
-
-    /**
-     * @param t
-     */
-    constructor(t: number) {
-        this.t = t;
-    }
-
-}
-
-let n = new MyT("fsd");
 export { Browser };
 
