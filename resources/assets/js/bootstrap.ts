@@ -28,7 +28,7 @@
  * any entry to be garbage collected if the key is provably lost.
  */
 
-window.WeakMap = require("weak-map");
+//window.WeakMap = require("weak-map");
 
 
 /**
@@ -36,26 +36,26 @@ window.WeakMap = require("weak-map");
  * interfaces.
  */
 
-window.Vue = require('vue');
+import Vue from 'vue';
 
 /**
  * Vue-router
  */
-import VueRouter from "vue-router"
-window.Vue.use(VueRouter);
+import VueRouter from "vue-router";
+Vue.use(VueRouter);
 
 /**
  * Vue-resource provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP
  */
-import VueResource from 'vue-resource'
-window.Vue.use(VueResource);
+import VueResource from 'vue-resource';
+//Vue.use(VueResource);
 
-Vue.http.interceptors.push((request, next) => {
-    request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken); //ToDo: Change to JWT Auth Token
-    request.headers.set('X-Requested-With', 'XMLHttpRequest');
-    next();
-});
+// Vue.http.interceptors.push((request: any, next: any) => {
+//     //request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken); //ToDo: Change to JWT Auth Token
+//     request.headers.set('X-Requested-With', 'XMLHttpRequest');
+//     next();
+// });
 
 /**
  * Vuex is a state management pattern + library for Vue.js applications. It
@@ -65,37 +65,7 @@ Vue.http.interceptors.push((request, next) => {
  */
 
 import Vuex from 'vuex'
-window.Vue.use(Vuex);
-
-/**
- * Velocity is an animation engine with the same API as jQuery's $.animate().
- * It works with and without jQuery. It's incredibly fast, and it features
- * color animation, transforms, loops, easings, SVG support, and scrolling.
- * It is the best of jQuery and CSS transitions combined.
- */
-
-window.Velocity = require("velocity-animate");
-
-/**
- * A Vue.js component for sharing links to social networks, work with
- * Vue.js 1.X or 2.X
- */
-
-const SocialSharing = require('vue-social-sharing');
-window.Vue.use(SocialSharing);
-
-/**
- * Element, a Vue 2.0 based component library for developers, designers
- * and product managers
- */
-
-import ElementUI from 'element-ui'
-//import locale from 'element-ui/lib/locale/lang/ru-RU'
-import 'element-ui/lib/theme-default/index.css'
-//window.Vue.use(ElementUI, { locale })
-window.Vue.use(ElementUI,)
-
-
+Vue.use(Vuex);
 
 
 /**
