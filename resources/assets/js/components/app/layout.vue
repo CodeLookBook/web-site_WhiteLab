@@ -1,11 +1,15 @@
 <template lang="pug">
 
     .APP-LAYOUT
+
         .SIDE-NAVBAR-SLOT
             slot(name="APP-SIDE-NAVBAR")
+
         .MAIN-CONTENT-SLOT(ref="mainContentSlot")
+
             .TOP-NAVBAR-SLOT(ref="topNavbarSlot")
                 slot(name="APP-TOP-NAVBAR")
+
             .CONTENT-SLOT(ref="contentSlot")
                 slot
 
@@ -45,165 +49,144 @@
                 overflow: auto
 
 </style>
-<script>
+<script lang="ts">
 
-    //*************************************************************************
-    // CHILD COMPONENTS IMPORT
-    //*************************************************************************
+    //-------------------------------------------------------------------------
+    // Import libraries.
+    //-------------------------------------------------------------------------
 
-    import {Browser} from "./Browser"
+    import Vue from "vue";
 
-    //*************************************************************************
-    // COMPONENT
-    //*************************************************************************
+    //-------------------------------------------------------------------------
+    // Child components import
+    //-------------------------------------------------------------------------
 
-    export default {
-
-        //*********************************************************************
-        // PROPERTIES
-        //*********************************************************************
+    import { Browser } from "./Browser";
 
 
-        //*********************************************************************
-        // DATA FIELDS
-        //*********************************************************************
+    interface I {
+        w: number,
+    }
 
-        data(){
+    function myFun (v: I) {
+
+    }
+    myFun({w: 1000});
+
+    //-------------------------------------------------------------------------
+    // Component
+    //-------------------------------------------------------------------------
+
+    export default Vue.extend({
+
+        //---------------------------------------------------------------------
+        // Properties
+        //---------------------------------------------------------------------
+
+        //---------------------------------------------------------------------
+        // Data fields
+        //---------------------------------------------------------------------
+
+        data() {
             return {
-                browser: new Browser(),
+                browser: new Browser(0, 0),
             }
         },
 
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // COMPUTED FIELDS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
 
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // WATCHED FIELDS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
         watch:{
 
-            'browser.clientHeight'(newV, oldV){
+            'browser.clientHeight'(newV: number, oldV: number): void {
 
-                this.SetContentSlotHeight();
+                this.setContentSlotHeight();
 
             }
 
         },
 
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // METHODS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
         methods:{
 
-            SaveBrowserClientHeight(){
+            saveBrowserClientHeight(): void{
 
+                let h = document.documentElement.clientHeight ||
+                        document.body.clientHeight;
 
-                let v = this,
-                    d = document,
-                    e = d.documentElement,
-                    b = d.body,
-                    h = e.clientHeight || b.clientHeight;
-
-                v.browser.clientHeight = h;
-
+                this.browser.clientHeight = h;
             },
 
-            /**
-             * @return {number}
-             */
-            GetMainContentSlotHeight(){
+            getMainContentSlotHeight(): number{
 
-                let v = this,
-                    r = v.$refs,
-                    el= r.mainContentSlot,
-                    rect = el.getBoundingClientRect(),
-                    h = rect.bottom - rect.top;
+                let el: object        = this.$refs.mainContentSlot;
+                let rectangle: object = el.getBoundingClientRect();
 
-                return h;
+                return rectangle.bottom - rectangle.top;
             },
-            /**
-             * @return {number}
-             */
-            GetTopNavbarSlotHeight(){
 
-                let v = this,
-                    r = v.$refs,
-                    el= r.topNavbarSlot,
-                    rect = el.getBoundingClientRect(),
-                    h = rect.bottom - rect.top;
+            getTopNavbarSlotHeight(): number{
 
-                return h;
+                let el: object        = this.$refs.topNavbarSlot;
+                let rectangle: object = el.getBoundingClientRect();
+
+                return rectangle.bottom - rectangle.top;
             },
-            SetContentSlotHeight(){
 
-                let v = this,
-                    r = v.$refs,
-                    el= r.contentSlot,
-                    s = el.style;
+            setContentSlotHeight(): void {
 
-                s.height = (() => {
+                let el = this.$refs.contentSlot,
+                        mainContentSlotHeight = this.getMainContentSlotHeight(),
+                        topNavbarSlotHeight = this.getTopNavbarSlotHeight();
 
-                    let v = this,
-                        mainContentSlotHeight = v.GetMainContentSlotHeight(),
-                        topNavbarSlotHeight = v.GetTopNavbarSlotHeight();
-
-                    return () => {
-                        return (mainContentSlotHeight - topNavbarSlotHeight) + 'px';
-                    }
-                })()();
-
+                el.style.height = (mainContentSlotHeight -
+                        topNavbarSlotHeight) + 'px'
             },
 
 
-            SubscribeOnEvent(){
+            subscribeOnEvent(): void {
 
-                let v = this,
-                    w = window;
-
-                w.addEventListener('resize',v.SaveBrowserClientHeight);
+                window.addEventListener('resize',this.saveBrowserClientHeight);
 
             },
-            UnsubscribeFromEvents(){
 
-                let v = this,
-                    w = window;
+            unsubscribeFromEvents(): void {
 
-                v.removeEventListener('resize',w.SaveBrowserClientHeight);
+                window.removeEventListener('resize',this.saveBrowserClientHeight);
 
             },
         },
 
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // LIFE HOOKS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
         mounted(){
 
-            let v = this;
-
-            v.SubscribeOnEvent();
-            v.SaveBrowserClientHeight();
-            v.SetContentSlotHeight();
+            this.subscribeOnEvent();
+            this.saveBrowserClientHeight();
+            this.setContentSlotHeight();
 
         },
 
         beforeDestroy(){
-
-            let v = this;
-
-            this.UnsubscribeFromEvents();
-
+            this.unsubscribeFromEvents();
         },
 
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // CHILD COMPONENTS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
 
-    };
+    });
 
 </script>

@@ -11,16 +11,17 @@
     "flow": "flow"
   },
   "devDependencies": {
-    "@types/velocity-animate": "^1.2.30",
-    "@types/vue-resource": "^0.9.31",
+    "axios": "^0.16.2",
     "babel-plugin-transform-object-rest-spread": "*",
+    "browser-sync": "^2.18.12",
+    "browser-sync-webpack-plugin": "^1.1.4",
     "cross-env": "^3.2.3",
-    "laravel-mix": "0.*",
+    "laravel-mix": "*",
     "normalize.css": "*",
     "pug": "*",
     "ts-loader": "^2.2.0",
     "typescript": "^2.3.4",
-    "vue": "*",
+    "vue": "^2.3.4",
     "vue-resource": "*",
     "vue-router": "*"
   },

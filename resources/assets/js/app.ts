@@ -25,5 +25,4 @@ import app from "./components/app/app.vue";
 // APP VUE VIEW OBJECT
 //*************************************************************************
 
-
 new Vue(app);

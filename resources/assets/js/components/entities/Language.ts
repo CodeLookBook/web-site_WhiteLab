@@ -1,14 +1,18 @@
 // ----------------------------------------------------------------------------
 // Language class
 // ----------------------------------------------------------------------------
-
 /**
  * Contains language description information.
- * @property {string} abbreviation  - Language name abbr.
- * @property {string} name          - Language name.
- * @property {number} id            - Language id number.
  */
 class Language {
+
+    // ------------------------------------------------------------------------
+    // Private properties.
+    // ------------------------------------------------------------------------
+
+    private _abbreviation: string;
+    private _name:         string;
+    private _id:           number;
 
     // ------------------------------------------------------------------------
     // Constructor
@@ -21,10 +25,9 @@ class Language {
      */
     construct(abbreviation: string, name: string, id: number) {
 
-        // Init private variables.
-        _set.call(_abbreviation, this, abbreviation);
-        _set.call(_name, this, name);
-        _set.call(_id, this, id);
+        this._abbreviation = abbreviation;
+        this._name         = name;
+        this._id           = id;
     }
 
     // ------------------------------------------------------------------------
@@ -35,92 +38,50 @@ class Language {
      * @param {string} abbr - Language name abbreviation.
      */
     set abbreviation(abbr: string) {
-        _set.call(_abbreviation, this, abbr);
+        this._abbreviation = abbr;
     }
 
     /**
      * @return {string} - Language name abbreviation.
      */
     get abbreviation(): string {
-        return _get.call(_abbreviation, this);
+        return this._abbreviation;
     }
 
     /**
      * @param {string} name - Language name.
      */
     set name(name: string) {
-        _set.call(_name, this, name);
+        this._name = name;
     }
 
     /**
      * @return {string} - Language name.
      */
     get name(): string {
-        return _get.call(_name, this);
+        return this._name = name;
     }
 
     /**
      * @param {number} id - Language name.
      */
     set id(id: number) {
-        _set.call(_name, this, id);
+        this._id = id;
     }
 
     /**
      * @return {string} - Language name.
      */
     get id(): number {
-        return _get.call(_name, this);
+        return this._id;
     }
+
 }
-
-// ----------------------------------------------------------------------------
-// Private functions
-// ----------------------------------------------------------------------------
-
-/**
- * Gets class properties values from WeakMap
- * @function
- * @return {string | number}
- * @private
- */
-const _get = WeakMap.prototype.get;
-
-/**
- * Stores class properties values to WeakMap
- * @function
- * @return {string | number}
- * @private
- */
-const _set = WeakMap.prototype.set;
-
-// ----------------------------------------------------------------------------
-// Private variables
-// ----------------------------------------------------------------------------
-
-/**
- * Language name abbr.
- * @type {WeakMap}
- * @private
- */
-const _abbreviation = new WeakMap();
-
-/**
- * Language full name.
- * @type {WeakMap}
- * @private
- */
-const _name = new WeakMap();
-
-/**
- * Language id number.
- * @type {WeakMap}
- * @private
- */
-const _id = new WeakMap();
 
 // ----------------------------------------------------------------------------
 // Export
 // ----------------------------------------------------------------------------
 
-export { Language };
+export {Language};
+
+

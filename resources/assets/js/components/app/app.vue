@@ -1,7 +1,9 @@
 <template lang="pug">
 
-    layout
-        | Привет
+    //layout
+    div Привет {{appClient}}
+        br
+        div {{myMethodTest}}
 
 </template>
 <style lang="sass">
@@ -10,7 +12,7 @@
     @import ../../../sass/variables
 
 </style>
-<script lang="ts">
+<script >
 
     //-------------------------------------------------------------------------
     // App router
@@ -23,19 +25,23 @@
     //-------------------------------------------------------------------------
 
     import {store}  from "../../store/store";
-    import Vue from "vue";
     import VueRouter from "vue-router";
-    import {Store} from "vuex";
 
     //-------------------------------------------------------------------------
     // Import app components
     //-------------------------------------------------------------------------
 
-    import Layout   from "./layout.vue";
+    //import Layout   from "./layout.vue";
 
     //-------------------------------------------------------------------------
     // App component.
     //-------------------------------------------------------------------------
+
+    import {Browser} from "./Browser";
+    import Vue from "vue";
+    let b = new Browser();
+
+    b._clientHeight = "efdf";
 
     export default Vue.extend({
 
@@ -50,7 +56,7 @@
         data() {
             return {
                 // App manager.
-                appClient: null,
+                appClient: "Перменная",
 
                 // App settings
                 settings: {
@@ -68,12 +74,15 @@
         //---------------------------------------------------------------------
 
         methods: {
+            myMethodTest(): string{
+                return "Method works fine!";
+            }
         },
 
         mounted() {
         },
         components: {
-           Layout
+           //Layout
         }
     });
 

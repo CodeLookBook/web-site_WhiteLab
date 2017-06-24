@@ -36,7 +36,7 @@
  * interfaces.
  */
 
-import Vue from 'vue';
+import Vue from "vue";
 
 /**
  * Vue-router
@@ -44,12 +44,15 @@ import Vue from 'vue';
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
+import Axios from "axios";
+
+
 /**
  * Vue-resource provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP
  */
-import VueResource from 'vue-resource';
-//Vue.use(VueResource);
+// import VueResource from 'vue-resource';
+// Vue.use(VueResource);
 
 // Vue.http.interceptors.push((request: any, next: any) => {
 //     //request.headers.set('X-CSRF-TOKEN', Laravel.csrfToken); //ToDo: Change to JWT Auth Token
