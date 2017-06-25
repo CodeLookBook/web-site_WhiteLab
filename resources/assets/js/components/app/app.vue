@@ -1,9 +1,8 @@
 <template lang="pug">
 
     //layout
-    div Привет {{appClient}}
-        br
-        div {{myMethodTest}}
+    #test(ref="myDiv") Hello {{testVariable}}
+        router-view
 
 </template>
 <style lang="sass">
@@ -12,23 +11,23 @@
     @import ../../../sass/variables
 
 </style>
-<script >
+<script lang="ts">
 
     //-------------------------------------------------------------------------
+    // Import classes & objects.
+    //-------------------------------------------------------------------------
+
+    //Vue class.
+    import Vue from "vue";
+
     // App router
-    //-------------------------------------------------------------------------
-
     import {router} from "../../router/router";
 
-    //-------------------------------------------------------------------------
     // App store
-    //-------------------------------------------------------------------------
-
     import {store}  from "../../store/store";
-    import VueRouter from "vue-router";
 
     //-------------------------------------------------------------------------
-    // Import app components
+    // Import app components.
     //-------------------------------------------------------------------------
 
     //import Layout   from "./layout.vue";
@@ -37,53 +36,28 @@
     // App component.
     //-------------------------------------------------------------------------
 
-    import {Browser} from "./Browser";
-    import Vue from "vue";
-    let b = new Browser();
-
-    b._clientHeight = "efdf";
-
+    let d: string = 1212;
     export default Vue.extend({
 
         el: "#app",
         router: router,
-        store : store,
+        store: store,
 
-        //---------------------------------------------------------------------
-        // Data.
-        //---------------------------------------------------------------------
+        data(): object {
 
-        data() {
-            return {
-                // App manager.
-                appClient: "Перменная",
-
-                // App settings
-                settings: {
-                    uiLanguage: null, // UI language
-                    uiElements: null // page buttons
-                }
+            let  d: {testVariable: string} = {
+                testVariable: "Variable value",
             };
-        },
 
-        watch: {
+            return d;
         },
-
-        //---------------------------------------------------------------------
-        // Methods.
-        //---------------------------------------------------------------------
 
         methods: {
-            myMethodTest(): string{
-                return "Method works fine!";
-            }
+//            myMethodTest(): string{
+//                return this.testVariable;
+//            },
         },
-
-        mounted() {
-        },
-        components: {
-           //Layout
-        }
     });
+
 
 </script>

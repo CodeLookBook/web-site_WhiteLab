@@ -24,7 +24,6 @@ class Language {
      * @param {number} id           - Language id number.
      */
     construct(abbreviation: string, name: string, id: number) {
-
         this._abbreviation = abbreviation;
         this._name         = name;
         this._id           = id;
