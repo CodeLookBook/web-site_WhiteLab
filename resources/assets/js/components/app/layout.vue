@@ -1,11 +1,15 @@
 <template lang="pug">
 
     .APP-LAYOUT
+
         .SIDE-NAVBAR-SLOT
             slot(name="APP-SIDE-NAVBAR")
+
         .MAIN-CONTENT-SLOT(ref="mainContentSlot")
+
             .TOP-NAVBAR-SLOT(ref="topNavbarSlot")
                 slot(name="APP-TOP-NAVBAR")
+
             .CONTENT-SLOT(ref="contentSlot")
                 slot
 
@@ -33,177 +37,77 @@
 
         .MAIN-CONTENT-SLOT
             +position(a, $t:0, $l:0)
-            +size    (100%,100%)
-            overflow: hidden
+            +size    (100%, 100%)
+            overflow: auto
 
             .TOP-NAVBAR-SLOT
                 +position(r, $t:0, $l:0)
-                +size    (100%, $top-navbar-height)
+                +size    (100%, $top-navbar-slot-height)
 
             .CONTENT-SLOT
                 +position(r, $t:0, $l:0)
-                overflow: auto
 
 </style>
-<script>
+<script lang="ts">
 
-    //*************************************************************************
-    // CHILD COMPONENTS IMPORT
-    //*************************************************************************
+    //-------------------------------------------------------------------------
+    // Import classes & objects.
+    //-------------------------------------------------------------------------
 
-    import {Browser} from "../../entities/DTO/Browser"
+    import Vue, {ComponentOptions} from "vue";
+    import {LayoutFacade} from "./layout-entites/LayoutFacade";
 
-    //*************************************************************************
-    // COMPONENT
-    //*************************************************************************
+    //-------------------------------------------------------------------------
+    // Import child components
+    //-------------------------------------------------------------------------
 
+    //-------------------------------------------------------------------------
+    // Component interface
+    //-------------------------------------------------------------------------
+
+    interface ILayout extends Vue{
+        _layoutFacade: LayoutFacade | null;
+    }
+
+    //-------------------------------------------------------------------------
+    // Component
+    //-------------------------------------------------------------------------
     export default {
 
-        //*********************************************************************
-        // PROPERTIES
-        //*********************************************************************
+        //---------------------------------------------------------------------
+        // Data fields
+        //---------------------------------------------------------------------
 
-
-        //*********************************************************************
-        // DATA FIELDS
-        //*********************************************************************
-
-        data(){
+        data() {
             return {
-                browser: new Browser(),
-            }
+                _layoutFacade: null,
+            };
         },
 
-        //*********************************************************************
-        // COMPUTED FIELDS
-        //*********************************************************************
-
-
-        //*********************************************************************
-        // WATCHED FIELDS
-        //*********************************************************************
-
-        watch:{
-
-            'browser.clientHeight'(newV, oldV){
-
-                this.SetContentSlotHeight();
-
-            }
-
-        },
-
-        //*********************************************************************
-        // METHODS
-        //*********************************************************************
-
-        methods:{
-
-            SaveBrowserClientHeight(){
-
-
-                let v = this,
-                    d = document,
-                    e = d.documentElement,
-                    b = d.body,
-                    h = e.clientHeight || b.clientHeight;
-
-                v.browser.clientHeight = h;
-
-            },
-
-            /**
-             * @return {number}
-             */
-            GetMainContentSlotHeight(){
-
-                let v = this,
-                    r = v.$refs,
-                    el= r.mainContentSlot,
-                    rect = el.getBoundingClientRect(),
-                    h = rect.bottom - rect.top;
-
-                return h;
-            },
-            /**
-             * @return {number}
-             */
-            GetTopNavbarSlotHeight(){
-
-                let v = this,
-                    r = v.$refs,
-                    el= r.topNavbarSlot,
-                    rect = el.getBoundingClientRect(),
-                    h = rect.bottom - rect.top;
-
-                return h;
-            },
-            SetContentSlotHeight(){
-
-                let v = this,
-                    r = v.$refs,
-                    el= r.contentSlot,
-                    s = el.style;
-
-                s.height = (() => {
-
-                    let v = this,
-                        mainContentSlotHeight = v.GetMainContentSlotHeight(),
-                        topNavbarSlotHeight = v.GetTopNavbarSlotHeight();
-
-                    return () => {
-                        return (mainContentSlotHeight - topNavbarSlotHeight) + 'px';
-                    }
-                })()();
-
-            },
-
-
-            SubscribeOnEvent(){
-
-                let v = this,
-                    w = window;
-
-                w.addEventListener('resize',v.SaveBrowserClientHeight);
-
-            },
-            UnsubscribeFromEvents(){
-
-                let v = this,
-                    w = window;
-
-                v.removeEventListener('resize',w.SaveBrowserClientHeight);
-
-            },
-        },
-
-        //*********************************************************************
+        //---------------------------------------------------------------------
         // LIFE HOOKS
-        //*********************************************************************
+        //---------------------------------------------------------------------
 
         mounted(){
 
-            let v = this;
-
-            v.SubscribeOnEvent();
-            v.SaveBrowserClientHeight();
-            v.SetContentSlotHeight();
-
+            // Create & init 'this.layoutFacade' property
+            {
+                this._layoutFacade = new LayoutFacade();
+                this._layoutFacade.construct(
+                        this.$refs.mainContentSlot as HTMLElement,
+                        this.$refs.topNavbarSlot as HTMLElement,
+                        this.$refs.contentSlot as HTMLElement
+                );
+            }
         },
 
         beforeDestroy(){
 
-            let v = this;
+            if(this._layoutFacade !== null) {
+                this._layoutFacade.destruct();
+            }
+        }
 
-            this.UnsubscribeFromEvents();
-
-        },
-
-        //*********************************************************************
-        // CHILD COMPONENTS
-        //*********************************************************************
-
-
-    };
+    } as ComponentOptions<ILayout>
 
 </script>

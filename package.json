@@ -7,22 +7,29 @@
     "watch-poll": "npm run watch -- --watch-poll",
     "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+    "flow": "flow"
   },
   "devDependencies": {
+    "axios": "^0.16.2",
     "babel-plugin-transform-object-rest-spread": "*",
+    "browser-sync": "^2.18.12",
+    "browser-sync-webpack-plugin": "^1.1.4",
     "cross-env": "^3.2.3",
-    "laravel-mix": "0.*",
+    "laravel-mix": "*",
     "normalize.css": "*",
     "pug": "*",
-    "vue": "*",
-    "vue-router": "*",
-    "vue-resource": "*"
+    "ts-loader": "^2.2.0",
+    "typescript": "^2.3.4",
+    "vue": "^2.3.4",
+    "vue-resource": "*",
+    "vue-router": "*"
   },
   "dependencies": {
     "element-ui": "*",
     "velocity-animate": "*",
     "vue-social-sharing": "*",
-    "vuex": "*"
+    "vuex": "*",
+    "weak-map": "^1.0.5"
   }
 }

@@ -1,4 +1,4 @@
-const { mix } = require('laravel-mix');
+const {mix} = require('laravel-mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -11,10 +11,31 @@ const { mix } = require('laravel-mix');
  |
  */
 
-mix.js('resources/assets/js/app.js', 'public/js')
+mix.webpackConfig({
+    module: {
+        rules: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/,
+                options: {
+                    appendTsSuffixTo: [/\.vue$/],
+                },
+            },
+        ],
+    },
+    resolve: {
+        extensions: ['.ts', '.js', '.vue', '.json'],
+        alias: {
+            'vue$': 'vue/dist/vue.esm.js',
+        },
+    },
+});
+
+mix.js('resources/assets/js/app.ts', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .styles([
         'resources/assets/css/normalize.css',
-        'public/css/app.css'
+        'public/css/app.css',
     ], 'public/css/app.css')
     .mix.browserSync({ proxy: 'whitelab.dev' });
