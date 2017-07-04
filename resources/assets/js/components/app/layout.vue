@@ -37,8 +37,8 @@
 
         .MAIN-CONTENT-SLOT
             +position(a, $t:0, $l:0)
-            +size    (100%,100%)
-            overflow: hidden
+            +size    (100%, 100%)
+            overflow: auto
 
             .TOP-NAVBAR-SLOT
                 +position(r, $t:0, $l:0)
@@ -46,42 +46,33 @@
 
             .CONTENT-SLOT
                 +position(r, $t:0, $l:0)
-                overflow: auto
 
 </style>
 <script lang="ts">
 
     //-------------------------------------------------------------------------
-    // Import libraries.
+    // Import classes & objects.
     //-------------------------------------------------------------------------
 
-    import Vue from "vue";
+    import Vue, {ComponentOptions} from "vue";
+    import {LayoutFacade} from "./layout-entites/LayoutFacade";
 
     //-------------------------------------------------------------------------
-    // Child components import
+    // Import child components
     //-------------------------------------------------------------------------
 
-    import { Browser } from "./Browser";
+    //-------------------------------------------------------------------------
+    // Component interface
+    //-------------------------------------------------------------------------
 
-
-    interface I {
-        w: number,
+    interface ILayout extends Vue{
+        _layoutFacade: LayoutFacade | null;
     }
-
-    function myFun (v: I) {
-
-    }
-    myFun({w: 1000});
 
     //-------------------------------------------------------------------------
     // Component
     //-------------------------------------------------------------------------
-
-    export default Vue.extend({
-
-        //---------------------------------------------------------------------
-        // Properties
-        //---------------------------------------------------------------------
+    export default {
 
         //---------------------------------------------------------------------
         // Data fields
@@ -89,81 +80,8 @@
 
         data() {
             return {
-                browser: new Browser(0, 0),
-            }
-        },
-
-        //---------------------------------------------------------------------
-        // COMPUTED FIELDS
-        //---------------------------------------------------------------------
-
-
-        //---------------------------------------------------------------------
-        // WATCHED FIELDS
-        //---------------------------------------------------------------------
-
-        watch:{
-
-            'browser.clientHeight'(newV: number, oldV: number): void {
-
-                this.setContentSlotHeight();
-
-            }
-
-        },
-
-        //---------------------------------------------------------------------
-        // METHODS
-        //---------------------------------------------------------------------
-
-        methods:{
-
-            saveBrowserClientHeight(): void{
-
-                let h = document.documentElement.clientHeight ||
-                        document.body.clientHeight;
-
-                this.browser.clientHeight = h;
-            },
-
-            getMainContentSlotHeight(): number{
-
-                let el: object        = this.$refs.mainContentSlot;
-                let rectangle: object = el.getBoundingClientRect();
-
-                return rectangle.bottom - rectangle.top;
-            },
-
-            getTopNavbarSlotHeight(): number{
-
-                let el: object        = this.$refs.topNavbarSlot;
-                let rectangle: object = el.getBoundingClientRect();
-
-                return rectangle.bottom - rectangle.top;
-            },
-
-            setContentSlotHeight(): void {
-
-                let el = this.$refs.contentSlot,
-                        mainContentSlotHeight = this.getMainContentSlotHeight(),
-                        topNavbarSlotHeight = this.getTopNavbarSlotHeight();
-
-                el.style.height = (mainContentSlotHeight -
-                        topNavbarSlotHeight) + 'px'
-            },
-
-
-            subscribeOnEvent(): void {
-
-                window.addEventListener('resize',this.saveBrowserClientHeight);
-
-            },
-
-            unsubscribeFromEvents(): void {
-
-                window.removeEventListener('resize',this.saveBrowserClientHeight);
-
-            },
+                _layoutFacade: null,
+            };
         },
 
         //---------------------------------------------------------------------
@@ -172,21 +90,24 @@
 
         mounted(){
 
-            this.subscribeOnEvent();
-            this.saveBrowserClientHeight();
-            this.setContentSlotHeight();
-
+            // Create & init 'this.layoutFacade' property
+            {
+                this._layoutFacade = new LayoutFacade();
+                this._layoutFacade.construct(
+                        this.$refs.mainContentSlot as HTMLElement,
+                        this.$refs.topNavbarSlot as HTMLElement,
+                        this.$refs.contentSlot as HTMLElement
+                );
+            }
         },
 
         beforeDestroy(){
-            this.unsubscribeFromEvents();
-        },
 
-        //---------------------------------------------------------------------
-        // CHILD COMPONENTS
-        //---------------------------------------------------------------------
+            if(this._layoutFacade !== null) {
+                this._layoutFacade.destruct();
+            }
+        }
 
-
-    });
+    } as ComponentOptions<ILayout>
 
 </script>

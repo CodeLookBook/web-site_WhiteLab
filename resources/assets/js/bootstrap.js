@@ -23,7 +23,7 @@
  */
 //window.WeakMap = require("weak-map");
 /**
- * Vue (pronounced /vjuː/, like view) is a progressive framework for building user
+ * Vue is a progressive framework for building user
  * interfaces.
  */
 import Vue from "vue";
@@ -32,8 +32,10 @@ import Vue from "vue";
  */
 import VueRouter from "vue-router";
 Vue.use(VueRouter);
-import Axios from "axios";
-Vue.use(Axios);
+import axios from "axios";
+Object.defineProperty(Vue.prototype, '$http', {
+    value: axios
+});
 /**
  * Vue-resource provides services for making web requests and handle
  * responses using a XMLHttpRequest or JSONP

@@ -8,8 +8,9 @@
     "target": "es5",
 
     "allowJs": true,
+    "jsx": "preserve",
 
-   "allowSyntheticDefaultImports": true,
+    "allowSyntheticDefaultImports": true,
     "lib": [
       "dom",
       "es5",

@@ -45,11 +45,10 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 import axios from "axios";
-if(!Vue.prototype.hasOwnProperty('$http')){
-    Object.defineProperty(axios.prototype, '$http', {
-        value: axios
-    });
-}
+
+Object.defineProperty(Vue.prototype, '$http', {
+    value: axios
+});
 
 /**
  * Vue-resource provides services for making web requests and handle

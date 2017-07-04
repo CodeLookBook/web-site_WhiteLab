@@ -1,7 +1,6 @@
 <template lang="pug">
 
-    //layout
-    #test(ref="myDiv") Hello {{testVariable}}
+    layout
         router-view
 
 </template>
@@ -18,7 +17,7 @@
     //-------------------------------------------------------------------------
 
     //Vue class.
-    import Vue from "vue";
+    import Vue, { ComponentOptions } from "vue";
 
     // App router
     import {router} from "../../router/router";
@@ -30,34 +29,32 @@
     // Import app components.
     //-------------------------------------------------------------------------
 
-    //import Layout   from "./layout.vue";
+    import Layout   from "./layout.vue";
+    import * as VueRouter from "vue-router";
+    import Vuex from "vuex";
+
+    //-------------------------------------------------------------------------
+    // App interface.
+    //-------------------------------------------------------------------------
+
+    interface IApp extends Vue {
+        el        : string;
+        router    : VueRouter;
+        components: object;
+    }
 
     //-------------------------------------------------------------------------
     // App component.
     //-------------------------------------------------------------------------
 
-    let d: string = 1212;
-    export default Vue.extend({
-
+    export default {
         el: "#app",
         router: router,
         store: store,
-
-        data(): object {
-
-            let  d: {testVariable: string} = {
-                testVariable: "Variable value",
-            };
-
-            return d;
-        },
-
-        methods: {
-//            myMethodTest(): string{
-//                return this.testVariable;
-//            },
-        },
-    });
+        components:{
+            Layout
+        }
+    } as ComponentOptions<IApp>;
 
 
 </script>
