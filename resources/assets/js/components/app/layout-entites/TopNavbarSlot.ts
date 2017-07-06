@@ -1,5 +1,5 @@
 import {LayoutMediator} from "./LayoutMediator";
-import {DomElement} from "./DomElement";
+import {DomElement} from "../../../global-abstarct-classes/DomElement";
 
 /**---------------------------------------------------------------------------
  * TopNavbarSlot class

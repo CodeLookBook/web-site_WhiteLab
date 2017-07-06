@@ -8,15 +8,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-import { BrowserClientHeightChanged } from "../events/BrowserClientHeightChanged";
 import { ModifiedBrowserClientHeightState } from "../states/ModifiedBrowserClientHeightState";
 import { Observable } from "../../global-abstarct-classes/Observable";
 // ----------------------------------------------------------------------------
@@ -34,8 +25,13 @@ var BrowserClientHeight = (function (_super) {
     // ------------------------------------------------------------------------
     function BrowserClientHeight() {
         var _this = _super.call(this) || this;
-        var clientHeight = _this.getClientHeight();
-        _this.state = new ModifiedBrowserClientHeightState(_this, clientHeight, []);
+        // Init. new class state.
+        {
+            var newClientHeight = _this.getClientHeight();
+            var oldClientHeight = { value: 0, measure: "px" };
+            _this.state = new ModifiedBrowserClientHeightState(newClientHeight, oldClientHeight, [], _this);
+        }
+        // Subscribe on window 'resize' event.
         window.addEventListener('resize', _this.windowResizeHandler.bind(_this));
         return _this;
     }
@@ -77,17 +73,16 @@ var BrowserClientHeight = (function (_super) {
             measure: 'px'
         };
     };
-    /**
-     * Creates Event class object that will be sent to subscribers.
-     *
-     * @return {BrowserClientHeightChanged}
-     * @override
-     */
     BrowserClientHeight.prototype.createEvent = function () {
-        var newClientHeight = __assign({}, this.state.new);
-        var oldClientHeight = __assign({}, this.state.old);
-        //TODO: Создать Фабрику событий. Заменить BrowserClientHeightChanged.
-        return new BrowserClientHeightChanged(newClientHeight, oldClientHeight);
+        return this.state.createEvent();
+    };
+    /**
+     * Notify subscribers about changes;
+     */
+    BrowserClientHeight.prototype.notify = function () {
+        if (this.state instanceof ModifiedBrowserClientHeightState) {
+            this.state.notify();
+        }
     };
     /**
      * Window resize handler.

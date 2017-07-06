@@ -8,8 +8,8 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import EventNames from "./MediatorEventNames";
-import { Colleague } from "../../../global-abstarct-classes/Colleague";
+import EventNames from "../global-classes/enums/MediatorEventNames";
+import { Colleague } from "./Colleague";
 // ----------------------------------------------------------------------------
 // DomElement abstract class.
 // ----------------------------------------------------------------------------

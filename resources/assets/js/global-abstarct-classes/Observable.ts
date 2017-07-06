@@ -22,24 +22,31 @@ abstract class Observable<T, EventType>{
     // ------------------------------------------------------------------------
 
     /**
+     * Creates Event class object that will be sent to subscribers.
+     */
+    protected abstract createEvent(): EventType;
+
+    /**
      * Adds subscriber to subscribers list;
      */
-    on(handler: IEventHandlerType<EventType>): void {
+    public on(handler: IEventHandlerType<EventType>): void {
         this.state.observers.push(handler);
 
-        //Invoke new observer.
+        //Send current state to new observer.
         {
-            const event: EventType = this.createEvent();
-            const length = this.state.observers.length;
+            const event : EventType = this.createEvent()   ;
+            const length: number    = this.state.observers.length;
 
-            this.state.observers[length - 1](event);
+            if(length > 0){
+                this.state.observers[length - 1](event);
+            }
         }
     }
 
     /**
      * Remove on from subscribers list;
      */
-    off(handler: IEventHandlerType<EventType>): void{
+    public off(handler: IEventHandlerType<EventType>): void {
 
         //Find handler index in array.
         const index: number = this.state.observers.indexOf(handler);
@@ -53,31 +60,16 @@ abstract class Observable<T, EventType>{
     }
 
     /**
-     * Creates Event class object that will be sent to subscribers.
-     */
-    protected abstract createEvent(): EventType;
-
-    /**
      * Notify subscribers about changes;
      */
-    notify(): void | never {
-
-        //Create event
-        const event: EventType = this.createEvent();
-
-        //Send event
-        this.state.observers.forEach((value) => {
-            value(event)
-        });
-    }
-
+    public abstract notify(): void;
 
     /**
      * Object 'State' instance.
      *
      * @param value - New state value.
      */
-    set state(value: ObservableState<T, EventType>){
+    public set state(value: ObservableState<T, EventType>){
         this._state = value;
     }
 
@@ -86,7 +78,7 @@ abstract class Observable<T, EventType>{
      *
      * @return {ObservableState<T, EventType>}
      */
-    get state(): ObservableState<T, EventType>{
+    public get state(): ObservableState<T, EventType>{
         return this._state;
     }
 }

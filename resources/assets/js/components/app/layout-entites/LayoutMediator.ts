@@ -1,4 +1,4 @@
-import EventNames from "./MediatorEventNames";
+import EventNames from "../../../global-classes/enums/MediatorEventNames";
 import {ContentSlot} from "./ContentSlot";
 import {MainContentSlot} from "./MainContentSlot";
 import {TopNavbarSlot} from "./TopNavbarSlot";

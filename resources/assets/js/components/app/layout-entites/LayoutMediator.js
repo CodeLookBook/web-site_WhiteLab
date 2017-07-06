@@ -8,7 +8,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-import EventNames from "./MediatorEventNames";
+import EventNames from "../../../global-classes/enums/MediatorEventNames";
 import { ContentSlot } from "./ContentSlot";
 import { MainContentSlot } from "./MainContentSlot";
 import { TopNavbarSlot } from "./TopNavbarSlot";

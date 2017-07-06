@@ -1,6 +1,8 @@
 <template lang="pug">
 
     layout
+        top-navbar(slot="APP-TOP-NAVBAR")
+
         router-view
 
 </template>
@@ -19,6 +21,10 @@
     //Vue class.
     import Vue, { ComponentOptions } from "vue";
 
+    //VueRouter.
+    import * as VueRouter from "vue-router";
+
+
     // App router
     import {router} from "../../router/router";
 
@@ -30,8 +36,7 @@
     //-------------------------------------------------------------------------
 
     import Layout   from "./layout.vue";
-    import * as VueRouter from "vue-router";
-    import Vuex from "vuex";
+    import TopNavbar from "./top-navbar";
 
     //-------------------------------------------------------------------------
     // App interface.
@@ -52,9 +57,9 @@
         router: router,
         store: store,
         components:{
-            Layout
+            Layout,
+            TopNavbar,
         }
     } as ComponentOptions<IApp>;
-
 
 </script>

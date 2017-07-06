@@ -17,19 +17,23 @@ class ModifiedBrowserClientWidthState extends ObservableState<IWidthPx,
     BrowserClientWidthChanged>{
 
     // ------------------------------------------------------------------------
-    // Constructor.
+    // Constructor
     // ------------------------------------------------------------------------
 
     /**
-     * @param owner     - Reference to the state object owner.
-     * @param value     - New value of the state.
+     * @param newWidth - New state value.
+     * @param oldWidth - Old tate value.
      * @param observers - List of observers.
+     * @param owner     - Ref. to the owner of the current 'state' object.
      */
-    constructor(owner: Observable<IWidthPx, BrowserClientWidthChanged>,
-                value: IWidthPx,
-                observers: Observers<BrowserClientWidthChanged>) {
+    constructor(
+        newWidth: IWidthPx,
+        oldWidth: IWidthPx,
+        observers: Observers<BrowserClientWidthChanged>,
+        owner    : Observable<IWidthPx, BrowserClientWidthChanged>){
 
-        super(owner, value, observers);
+        super(newWidth, oldWidth, observers, owner);
+        this.notify();
     }
 
     // ------------------------------------------------------------------------
@@ -38,27 +42,61 @@ class ModifiedBrowserClientWidthState extends ObservableState<IWidthPx,
 
     /**
      * Changes 'state' property in 'Observable' instance (owner).
-     *
-     * @param newWidth - State value.
-     * @override
+     * @param newValue  - New State value.
+     * @param oldValue  - Old state value.
+     * @param observers - Array of observers.
+     * @param owner     - Ref. to state owner object.
      */
-    protected changeState(newWidth: IWidthPx): void {
+    protected changeState(
+        newValue : IWidthPx,
+        oldValue : IWidthPx,
+        observers: Observers<BrowserClientWidthChanged>,
+        owner    : Observable<IWidthPx, BrowserClientWidthChanged>): void {
 
-        if (this.new.value === newWidth.value) {
+        if (this.new.value === newValue.value) {
 
             // Change owner state to  'Unmodified'.
             this.owner.state = new UnmodifiedBrowserClientWidthState(
-                this.owner,
-                newWidth,
-                this.observers
+                this.new      ,
+                this.old      ,
+                this.observers,
+                this.owner    ,
             );
         } else {
 
-            // Update current state
-            this.new.value = newWidth.value;
+            // Create new modified state.
+            this.owner.state = new ModifiedBrowserClientWidthState(
+                newValue ,
+                oldValue ,
+                observers,
+                owner    ,
+            );
+        }
+    }
 
-            // Notify subscribers
-            this.notify();
+    /**
+     * Creates Event class object that will be sent to subscribers.
+     */
+    public createEvent(): BrowserClientWidthChanged {
+
+        const newClientWidth: IWidthPx = {...this.new};
+        const oldClientWidth: IWidthPx = {...this.old};
+
+        //TODO: Создать Фабрику событий. Заменить BrowserClientWidthChanged.
+        return new BrowserClientWidthChanged(newClientWidth, oldClientWidth)
+    }
+
+    /**
+     * Notify subscribers about changes;
+     */
+    public notify(): void {
+
+        const length: number = this.observers.length;
+
+        if(length > 0){
+
+            const event: BrowserClientWidthChanged = this.createEvent();
+            this.observers.forEach(func => func(event));
         }
     }
 }

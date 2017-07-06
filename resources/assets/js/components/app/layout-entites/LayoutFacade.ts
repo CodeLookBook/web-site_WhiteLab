@@ -5,10 +5,11 @@ import {ContentSlot    } from "./ContentSlot"    ;
 import {Browser        } from "../../../global-classes/facades/Browser";
 import {BrowserEvents} from "../../../global-classes/enums/BrowserEvents";
 import {BrowserClientHeightChanged} from "../../../global-classes/events/BrowserClientHeightChanged";
+import {Scroll} from "../../../global-classes/facades/Scroll";
 
-// ---------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 // LayoutFacade class
-// ---------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 
 class LayoutFacade{
 
@@ -44,17 +45,22 @@ class LayoutFacade{
      */
     private _contentSlot     : ContentSlot     | null = null;
 
+    /**
+     * Object that represents Browse.
+     * @type {Browser | null}
+     * @private
+     */
     private _browser         : Browser         | null = null;
+
+    /**
+     * Represents .CONTENT-SLOT observable object that emmit's 'scroll' events.
+     * @type {Scroll | null}
+     * @private
+     */
+    private _scroll          : Scroll          | null = null;
 
     // ------------------------------------------------------------------------
     // Constructor.
-    // ------------------------------------------------------------------------
-
-    constructor(){
-    }
-
-    // ------------------------------------------------------------------------
-    // Methods.
     // ------------------------------------------------------------------------
 
     /**
@@ -67,11 +73,10 @@ class LayoutFacade{
      * @param contentSlot     - Object that represents .CONTENT-SLOT HTML DOM
      *                          element
      */
-    public construct(
+    constructor(
         mainContentSlot : HTMLElement,
         topNavbarSlot   : HTMLElement,
-        contentSlot     : HTMLElement
-    ): void {
+        contentSlot     : HTMLElement){
 
         //Creates colleagues and mediator
         {
@@ -93,6 +98,7 @@ class LayoutFacade{
             );
 
             this._browser = Browser.getInstance();
+            this._scroll  = new Scroll(mainContentSlot);
         }
 
         //Add ref's. on colleagues to mediator instance.
@@ -108,8 +114,14 @@ class LayoutFacade{
                 BrowserEvents.ClientHeightChanged,
                 this.setContentSlotHeight.bind(this)
             );
+
+            //...Добавить подписку на события к объекту scroll;
         }
     }
+
+    // ------------------------------------------------------------------------
+    // Methods.
+    // ------------------------------------------------------------------------
 
     /**
      * Window 'resize' event handler.

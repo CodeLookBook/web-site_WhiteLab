@@ -224,7 +224,7 @@
 
 
     <!-- Normalize styles-->
-    <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{ mix('css/normalize.css')}}" rel="stylesheet" type="text/css">
 
     <!--App Styles -->
     <link href="{{ mix('css/app.css')}}" rel="stylesheet" type="text/css">
@@ -241,13 +241,14 @@
 
     <!-- Custom styles -->
     <style>
-
+        *{
+            box-sizing: border-box;
+        }
         html, body {
             overflow: hidden;
             width:      100%;
             height:     100%;
         }
-
     </style>
 
 @endsection

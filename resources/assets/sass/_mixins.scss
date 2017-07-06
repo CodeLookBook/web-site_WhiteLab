@@ -39,3 +39,7 @@
   -ms-transition:     $transition;
   transition:         $transition;
 }
+
+@mixin border($color){
+  border: 1px solid $color;
+}

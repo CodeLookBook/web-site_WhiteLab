@@ -31,9 +31,20 @@ class BrowserClientHeight extends Observable <IHeightPx,
     constructor(){
         super();
 
-        const clientHeight: IHeightPx = this.getClientHeight();
-        this.state = new ModifiedBrowserClientHeightState(this, clientHeight, []);
+        // Init. new class state.
+        {
+            const newClientHeight: IHeightPx = this.getClientHeight()   ;
+            const oldClientHeight: IHeightPx = {value: 0, measure: "px"};
 
+            this.state = new ModifiedBrowserClientHeightState(
+                newClientHeight,
+                oldClientHeight,
+                [],
+                this
+            );
+        }
+
+        // Subscribe on window 'resize' event.
         window.addEventListener('resize', this.windowResizeHandler.bind(this));
     }
 
@@ -82,20 +93,18 @@ class BrowserClientHeight extends Observable <IHeightPx,
         };
     }
 
+    protected createEvent(): BrowserClientHeightChanged {
+        return this.state.createEvent();
+    }
 
     /**
-     * Creates Event class object that will be sent to subscribers.
-     *
-     * @return {BrowserClientHeightChanged}
-     * @override
+     * Notify subscribers about changes;
      */
-    protected createEvent(): BrowserClientHeightChanged {
+    public notify(): void {
 
-        const newClientHeight: IHeightPx = {...this.state.new};
-        const oldClientHeight: IHeightPx = {...this.state.old};
-
-        //TODO: Создать Фабрику событий. Заменить BrowserClientHeightChanged.
-        return new BrowserClientHeightChanged(newClientHeight, oldClientHeight);
+        if(this.state instanceof ModifiedBrowserClientHeightState) {
+            this.state.notify();
+        }
     }
 
     /**

@@ -1,8 +1,9 @@
-import EventNames from "./MediatorEventNames";
-import {LayoutMediator} from "./LayoutMediator";
-import {Colleague} from "../../../global-abstarct-classes/Colleague";
-import {IHeightPx} from "../../../global-interfaces/IHeightPx";
-import {IWidthPx} from "../../../global-interfaces/IWidthPx";
+import EventNames from "../global-classes/enums/MediatorEventNames";
+import {LayoutMediator} from "../components/app/layout-entites/LayoutMediator";
+import {Colleague} from "./Colleague";
+import {IHeightPx} from "../global-interfaces/IHeightPx";
+import {IWidthPx} from "../global-interfaces/IWidthPx";
+import {Mediator} from "./Mediator";
 
 // ----------------------------------------------------------------------------
 // DomElement abstract class.
@@ -11,7 +12,7 @@ import {IWidthPx} from "../../../global-interfaces/IWidthPx";
  * Abstract wrapper that provides simple API that helps to
  * get element description information;
  */
-class DomElement extends Colleague<EventNames> {
+abstract class DomElement extends Colleague<EventNames> {
 
     // ------------------------------------------------------------------------
     // Properties.
@@ -30,7 +31,7 @@ class DomElement extends Colleague<EventNames> {
      * @param el       - HTML DOM element.
      * @param mediator - 'LayoutMediator' instance.
      */
-    constructor(el: HTMLElement, mediator: LayoutMediator){
+    constructor(el: HTMLElement, mediator: Mediator<EventNames>){
         super(mediator);
         this._el = el;
     }

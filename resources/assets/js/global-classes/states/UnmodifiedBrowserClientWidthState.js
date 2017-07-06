@@ -8,7 +8,16 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 import { ModifiedBrowserClientWidthState } from "./ModifiedBrowserClientWidthState";
+import { BrowserClientWidthChanged } from "../events/BrowserClientWidthChanged";
 import { ObservableState } from "../../global-abstarct-classes/ObservableState";
 // ----------------------------------------------------------------------------
 // UnmodifiedState class.
@@ -19,32 +28,35 @@ import { ObservableState } from "../../global-abstarct-classes/ObservableState";
  */
 var UnmodifiedBrowserClientWidthState = (function (_super) {
     __extends(UnmodifiedBrowserClientWidthState, _super);
-    /**
-     * @param owner - Reference to the state object owner.
-     * @param value - New value of the state.
-     * @param observers - List of observers.
-     */
-    function UnmodifiedBrowserClientWidthState(owner, value, observers) {
-        return _super.call(this, owner, value, observers) || this;
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-         *   Must not invoke 'this.fire();' here.                          *
-         *   Forbidden behavior for this class.                            *
-         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+    function UnmodifiedBrowserClientWidthState() {
+        return _super !== null && _super.apply(this, arguments) || this;
     }
     // ------------------------------------------------------------------------
     // Methods.
     // ------------------------------------------------------------------------
     /**
      * Changes 'state' property in 'Observable' instance (owner).
-     *
-     * @param newWidth - State value.
-     * @override
+     * @param newValue
+     * @param oldValue
+     * @param observers
+     * @param owner
      */
-    UnmodifiedBrowserClientWidthState.prototype.changeState = function (newWidth) {
-        if (this.new.value !== newWidth.value) {
-            this.owner.state = new ModifiedBrowserClientWidthState(this.owner, newWidth, this.observers);
-            this.notify();
+    UnmodifiedBrowserClientWidthState.prototype.changeState = function (newValue, oldValue, observers, owner) {
+        if (this.new.value !== newValue.value) {
+            this.owner.state = new ModifiedBrowserClientWidthState(newValue, oldValue, observers, owner);
         }
+        else {
+            this.owner.state = new UnmodifiedBrowserClientWidthState(this.new, this.old, this.observers, this.owner);
+        }
+    };
+    /**
+     * Creates Event class object that will be sent to subscribers.
+     */
+    UnmodifiedBrowserClientWidthState.prototype.createEvent = function () {
+        var newClientWidth = __assign({}, this.new);
+        var oldClientWidth = __assign({}, this.old);
+        //TODO: Создать Фабрику событий. Заменить BrowserClientWidthChanged.
+        return new BrowserClientWidthChanged(newClientWidth, oldClientWidth);
     };
     return UnmodifiedBrowserClientWidthState;
 }(ObservableState));

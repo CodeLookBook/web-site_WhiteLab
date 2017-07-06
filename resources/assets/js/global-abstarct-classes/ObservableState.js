@@ -10,16 +10,18 @@ var ObservableState = (function () {
     // Constructor.
     // ------------------------------------------------------------------------
     /**
-     * @param owner     - Reference to the state object owner.
-     * @param value     - New value of the state.
-     * @param observers - List of observers.
+     * @param newValue     - New value of the state.
+     * @param oldValue     - Old value of the state.
+     * @param observers    - List of observers or empty array.
+     * @param owner        - Reference to the state object owner.
      */
-    function ObservableState(owner, value, observers) {
-        //Init class properties:
+    function ObservableState(newValue, oldValue, observers, owner) {
+        //Init. class properties:
         {
-            this._owner = owner;
+            this._new = newValue;
+            this._old = oldValue;
             this._observers = observers;
-            this._new = value;
+            this._owner = owner;
         }
     }
     Object.defineProperty(ObservableState.prototype, "new", {
@@ -72,15 +74,10 @@ var ObservableState = (function () {
     });
     /**
      * Handles new state value.
-     *
      * @param newValue - New state value.
      */
     ObservableState.prototype.handleNewValue = function (newValue) {
-        this.changeState(newValue, this.old, this.observers);
-    };
-    // Notify all subscribers
-    ObservableState.prototype.notify = function () {
-        this.owner.notify();
+        this.changeState(newValue, this.new, this.observers, this.owner);
     };
     return ObservableState;
 }());

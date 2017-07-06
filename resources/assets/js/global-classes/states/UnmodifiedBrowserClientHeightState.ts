@@ -16,42 +16,51 @@ import {ObservableState} from "../../global-abstarct-classes/ObservableState";
 class UnmodifiedBrowserClientHeightState extends ObservableState<IHeightPx,
     BrowserClientHeightChanged>{
 
-    /**
-     * @param owner     - Reference to the state object owner.
-     * @param newHeight - New value of the state.
-     * @param observers - List of observers.
-     */
-    constructor(owner    : Observable<IHeightPx, BrowserClientHeightChanged>,
-                newHeight: IHeightPx,
-                observers: Observers<BrowserClientHeightChanged>){
-
-        super(owner, newHeight, observers);
-
-        /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
-         *   Must not invoke 'this.notify();' here.                          *
-         *   Forbidden behavior for this class.                            *
-         * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-    }
-
     // ------------------------------------------------------------------------
     // Methods.
     // ------------------------------------------------------------------------
 
     /**
-     * Changes 'state' property in 'Observable' instance (owner).
      *
-     * @param newHeight - State value.
+     * @param newValue  - New state value.
+     * @param oldValue  - Old state value.
+     * @param observers - List of observers or empty array.
+     * @param owner     - Ref. to state owner object.
      */
-    protected changeState(newHeight: IHeightPx): void {
+    protected changeState(
+        newValue : IHeightPx,
+        oldValue : IHeightPx,
+        observers: Observers<BrowserClientHeightChanged>,
+        owner    : Observable<IHeightPx, BrowserClientHeightChanged>): void {
 
-        if (this.new.value !== newHeight.value) {
+        // Change state.
+        if (this.new.value !== newValue.value) {
             this.owner.state = new ModifiedBrowserClientHeightState(
-                this.owner,
-                newHeight,
-                this.observers
+                newValue ,
+                oldValue ,
+                observers,
+                owner    ,
             );
-            this.notify();
+        } else {
+            this.owner.state = new UnmodifiedBrowserClientHeightState(
+                this.new ,
+                this.old,
+                this.observers,
+                this.owner    ,
+            );
         }
+    }
+
+    /**
+     * Creates Event class object that will be sent to subscribers.
+     */
+    public createEvent(): BrowserClientHeightChanged {
+
+        const newClientHeight: IHeightPx = {...this.new};
+        const oldClientHeight: IHeightPx = {...this.old};
+
+        //TODO: Создать Фабрику событий. Заменить BrowserClientHeightChanged.
+        return new BrowserClientHeightChanged(newClientHeight, oldClientHeight);
     }
 }
 

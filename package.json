@@ -28,6 +28,7 @@
   "dependencies": {
     "element-ui": "*",
     "velocity-animate": "*",
+    "vue-class-component": "^5.0.2",
     "vue-social-sharing": "*",
     "vuex": "*",
     "weak-map": "^1.0.5"

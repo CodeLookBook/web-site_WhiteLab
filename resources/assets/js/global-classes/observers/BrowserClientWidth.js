@@ -8,15 +8,6 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-import { BrowserClientWidthChanged } from "../events/BrowserClientWidthChanged";
 import { ModifiedBrowserClientWidthState } from "../states/ModifiedBrowserClientWidthState";
 import { Observable } from "../../global-abstarct-classes/Observable";
 // ----------------------------------------------------------------------------
@@ -33,8 +24,12 @@ var BrowserClientWidth = (function (_super) {
     // ------------------------------------------------------------------------
     function BrowserClientWidth() {
         var _this = _super.call(this) || this;
-        var clientWidth = _this.getClientWidth();
-        _this.state = new ModifiedBrowserClientWidthState(_this, clientWidth, []);
+        // Init. new class state.
+        {
+            var newClientWidth = _this.getClientWidth();
+            var oldClientWidth = { value: 0, measure: "px" };
+            _this.state = new ModifiedBrowserClientWidthState(newClientWidth, oldClientWidth, [], _this);
+        }
         window.addEventListener('resize', _this.windowResizeHandler.bind(_this));
         return _this;
     }
@@ -84,16 +79,21 @@ var BrowserClientWidth = (function (_super) {
         };
     };
     /**
+     * Notify subscribers about changes;
+     */
+    BrowserClientWidth.prototype.notify = function () {
+        if (this.state instanceof ModifiedBrowserClientWidthState) {
+            this.state.notify();
+        }
+    };
+    /**
      * Creates Event class object that will be sent to subscribers.
      *
      * @return {BrowserClientWidthChanged}
      * @override
      */
     BrowserClientWidth.prototype.createEvent = function () {
-        var newClientWidth = __assign({}, this.state.new);
-        var oldClientWidth = __assign({}, this.state.old);
-        //TODO: Создать Фабрику событий. Заменить BrowserClientWidthChanged
-        return (new BrowserClientWidthChanged(newClientWidth, oldClientWidth));
+        return this.state.createEvent();
     };
     /**
      * Window resize handler.

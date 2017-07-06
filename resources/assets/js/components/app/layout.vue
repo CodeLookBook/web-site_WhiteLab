@@ -20,7 +20,7 @@
     @import ../../../sass/variables
 
     .APP-LAYOUT
-        +position(a, $t:0, $l:0)
+        +position(r, $t:0, $l:0)
         +size    (100%, 100%)
         overflow: hidden
 
@@ -89,16 +89,11 @@
         //---------------------------------------------------------------------
 
         mounted(){
-
-            // Create & init 'this.layoutFacade' property
-            {
-                this._layoutFacade = new LayoutFacade();
-                this._layoutFacade.construct(
-                        this.$refs.mainContentSlot as HTMLElement,
-                        this.$refs.topNavbarSlot as HTMLElement,
-                        this.$refs.contentSlot as HTMLElement
-                );
-            }
+            this._layoutFacade = new LayoutFacade(
+                    this.$refs.mainContentSlot as HTMLElement,
+                    this.$refs.topNavbarSlot   as HTMLElement,
+                    this.$refs.contentSlot     as HTMLElement
+            );
         },
 
         beforeDestroy(){

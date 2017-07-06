@@ -1,5 +1,5 @@
 import {LayoutMediator} from "./LayoutMediator";
-import {DomElement} from "./DomElement";
+import {DomElement} from "../../../global-abstarct-classes/DomElement";
 
 // ---------------------------------------------------------------------------
 // ContentSlot class
@@ -20,7 +20,7 @@ class ContentSlot extends DomElement{
     /**
      * Singleton pattern instance.
      */
-    protected static _instance: ContentSlot | null = null;
+    private static _instance: ContentSlot | null = null;
 
     // ------------------------------------------------------------------------
     // Constructor.

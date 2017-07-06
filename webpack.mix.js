@@ -34,8 +34,5 @@ mix.webpackConfig({
 
 mix.js('resources/assets/js/app.ts', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
-    .styles([
-        'resources/assets/css/normalize.css',
-        'public/css/app.css',
-    ], 'public/css/app.css')
+    .styles('resources/assets/css/normalize.css', 'public/css/normalize.css')
     .mix.browserSync({ proxy: 'whitelab.dev' });

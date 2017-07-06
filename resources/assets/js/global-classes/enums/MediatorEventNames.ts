@@ -1,6 +1,7 @@
 enum MediatorEventNames {
     HeightChanged,
     WidthChanged,
+    Scrolled,
 }
 
 

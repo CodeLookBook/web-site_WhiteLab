@@ -16,11 +16,6 @@ abstract class ObservableState<T, EventType> {
     // ------------------------------------------------------------------------
 
     /**
-     * Reference to state owner.
-     */
-    private readonly _owner: Observable<T, EventType>;
-
-    /**
      * New state values.
      */
     private readonly _new: T;
@@ -33,28 +28,36 @@ abstract class ObservableState<T, EventType> {
     /**
      * Array of observers callbacks.
      */
-    private readonly _observers: Observers<EventType>
+    private readonly _observers: Observers<EventType>;
+
+    /**
+     * Reference to state owner.
+     */
+    private readonly _owner: Observable<T, EventType>;
 
     // ------------------------------------------------------------------------
     // Constructor.
     // ------------------------------------------------------------------------
 
     /**
-     * @param owner     - Reference to the state object owner.
-     * @param value     - New value of the state.
-     * @param observers - List of observers.
+     * @param newValue     - New value of the state.
+     * @param oldValue     - Old value of the state.
+     * @param observers    - List of observers or empty array.
+     * @param owner        - Reference to the state object owner.
      */
-    constructor(owner: Observable<T, EventType>,
-                value: T,
-                observers: Observers<EventType>){
+    constructor(newValue : T,
+                oldValue : T,
+                observers: Observers<EventType>,
+                owner    : Observable<T, EventType>
+                ){
 
-        //Init class properties:
+        //Init. class properties:
         {
-            this._owner     = owner;
+            this._new       = newValue;
+            this._old       = oldValue;
             this._observers = observers;
-            this._new       = value;
+            this._owner     = owner;
         }
-
     }
 
     // ------------------------------------------------------------------------
@@ -101,29 +104,30 @@ abstract class ObservableState<T, EventType> {
     /**
      * Changes object state property.
      *
-     * @param newValue - New state value.
-     * @param oldValue - New state value.
+     * @param newValue  - New state value.
+     * @param oldValue  - New state value.
      * @param observers - Observers list.
+     * @param owner     - Ref. to owner object.
      */
     protected abstract changeState(
-        newValue: T,
-        oldValue: T,
-        observers: Observers<EventType>
+        newValue : T,
+        oldValue : T,
+        observers: Observers<EventType>,
+        owner    : Observable<T, EventType>
     ): void;
 
     /**
      * Handles new state value.
-     *
      * @param newValue - New state value.
      */
     public handleNewValue(newValue: T): void {
-        this.changeState(newValue, this.old, this.observers);
+        this.changeState(newValue, this.new, this.observers, this.owner);
     }
 
-    // Notify all subscribers
-    protected notify(){
-        this.owner.notify();
-    }
+    /**
+     * Creates Event class object that will be sent to subscribers.
+     */
+    public abstract createEvent(): EventType;
 }
 
 // ----------------------------------------------------------------------------

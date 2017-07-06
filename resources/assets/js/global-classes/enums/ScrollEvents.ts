@@ -1,0 +1,4 @@
+enum ScrollEvents {
+    ScrollUp,
+    ScrollDown,
+}

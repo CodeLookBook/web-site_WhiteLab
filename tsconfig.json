@@ -15,9 +15,36 @@
       "dom",
       "es5",
       "es2015.promise"
-    ]
+    ],
+
+    "experimentalDecorators": true
   },
   "include": [
     "./resources/**/*"
   ]
 }
+
+/*{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "es2015"
+    ],
+    "module": "es2015",
+    "moduleResolution": "node",
+    "isolatedModules": false,
+    "experimentalDecorators": true,
+    "declaration": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
+    "strictNullChecks": true,
+    "removeComments": true,
+    "suppressImplicitAnyIndexErrors": true,
+    "allowSyntheticDefaultImports": true
+  },*/
+//  "include": [
+//    "./resources/**/*"
+//  ],
+//  "compileOnSave": false
+//}

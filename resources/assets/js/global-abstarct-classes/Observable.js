@@ -7,19 +7,18 @@
 var Observable = (function () {
     function Observable() {
     }
-    // ------------------------------------------------------------------------
-    // Methods.
-    // ------------------------------------------------------------------------
     /**
      * Adds subscriber to subscribers list;
      */
     Observable.prototype.on = function (handler) {
         this.state.observers.push(handler);
-        //Invoke new observer.
+        //Send current state to new observer.
         {
             var event_1 = this.createEvent();
             var length_1 = this.state.observers.length;
-            this.state.observers[length_1 - 1](event_1);
+            if (length_1 > 0) {
+                this.state.observers[length_1 - 1](event_1);
+            }
         }
     };
     /**
@@ -35,17 +34,6 @@ var Observable = (function () {
         else {
             this.state.observers.slice(index, 1);
         }
-    };
-    /**
-     * Notify subscribers about changes;
-     */
-    Observable.prototype.notify = function () {
-        //Create event
-        var event = this.createEvent();
-        //Send event
-        this.state.observers.forEach(function (value) {
-            value(event);
-        });
     };
     Object.defineProperty(Observable.prototype, "state", {
         /**

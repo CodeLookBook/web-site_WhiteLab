@@ -4,14 +4,25 @@ import { TopNavbarSlot } from "./TopNavbarSlot";
 import { ContentSlot } from "./ContentSlot";
 import { Browser } from "../../../global-classes/facades/Browser";
 import { BrowserEvents } from "../../../global-classes/enums/BrowserEvents";
-// ---------------------------------------------------------------------------
+import { Scroll } from "../../../global-classes/facades/Scroll";
+// ----------------------------------------------------------------------------
 // LayoutFacade class
-// ---------------------------------------------------------------------------
+// ----------------------------------------------------------------------------
 var LayoutFacade = (function () {
     // ------------------------------------------------------------------------
     // Constructor.
     // ------------------------------------------------------------------------
-    function LayoutFacade() {
+    /**
+     * Construct sub instances and mediator that manages those sub instances.
+     *
+     * @param mainContentSlot - Object that represents .MAIN-CONTENT-SLOT HTML
+     *                          DOM element
+     * @param topNavbarSlot   - Object that represents .TOP-NAVBAR-SLOT HTML
+     *                          DOM element
+     * @param contentSlot     - Object that represents .CONTENT-SLOT HTML DOM
+     *                          element
+     */
+    function LayoutFacade(mainContentSlot, topNavbarSlot, contentSlot) {
         // ------------------------------------------------------------------------
         // Properties.
         // ------------------------------------------------------------------------
@@ -39,22 +50,18 @@ var LayoutFacade = (function () {
          * @private
          */
         this._contentSlot = null;
+        /**
+         * Object that represents Browse.
+         * @type {Browser | null}
+         * @private
+         */
         this._browser = null;
-    }
-    // ------------------------------------------------------------------------
-    // Methods.
-    // ------------------------------------------------------------------------
-    /**
-     * Construct sub instances and mediator that manages those sub instances.
-     *
-     * @param mainContentSlot - Object that represents .MAIN-CONTENT-SLOT HTML
-     *                          DOM element
-     * @param topNavbarSlot   - Object that represents .TOP-NAVBAR-SLOT HTML
-     *                          DOM element
-     * @param contentSlot     - Object that represents .CONTENT-SLOT HTML DOM
-     *                          element
-     */
-    LayoutFacade.prototype.construct = function (mainContentSlot, topNavbarSlot, contentSlot) {
+        /**
+         * Represents .CONTENT-SLOT observable object that emmit's 'scroll' events.
+         * @type {Scroll | null}
+         * @private
+         */
+        this._scroll = null;
         //Creates colleagues and mediator
         {
             this._layoutMediator = LayoutMediator.getInstance();
@@ -62,6 +69,7 @@ var LayoutFacade = (function () {
             this._topNavbarSlot = TopNavbarSlot.getInstance(topNavbarSlot, this._layoutMediator);
             this._contentSlot = ContentSlot.getInstance(contentSlot, this._layoutMediator);
             this._browser = Browser.getInstance();
+            this._scroll = new Scroll(mainContentSlot);
         }
         //Add ref's. on colleagues to mediator instance.
         {
@@ -72,8 +80,12 @@ var LayoutFacade = (function () {
         //Add handlers to window.
         {
             this._browser.on(BrowserEvents.ClientHeightChanged, this.setContentSlotHeight.bind(this));
+            //...Добавить подписку на события к объекту scroll;
         }
-    };
+    }
+    // ------------------------------------------------------------------------
+    // Methods.
+    // ------------------------------------------------------------------------
     /**
      * Window 'resize' event handler.
      * Changes 'this._contentSlot' height on window 'resize' event.

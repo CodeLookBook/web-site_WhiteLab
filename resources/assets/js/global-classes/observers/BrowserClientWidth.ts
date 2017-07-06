@@ -30,8 +30,18 @@ class BrowserClientWidth extends Observable <IWidthPx, BrowserClientWidthChanged
     constructor(){
         super();
 
-        const clientWidth: IWidthPx = this.getClientWidth();
-        this.state = new ModifiedBrowserClientWidthState( this, clientWidth,[]);
+        // Init. new class state.
+        {
+            const newClientWidth: IWidthPx = this.getClientWidth()    ;
+            const oldClientWidth: IWidthPx = {value: 0, measure: "px"};
+
+            this.state = new ModifiedBrowserClientWidthState(
+                newClientWidth,
+                oldClientWidth,
+                [],
+                this
+            );
+        }
 
         window.addEventListener('resize', this.windowResizeHandler.bind(this));
     }
@@ -89,18 +99,23 @@ class BrowserClientWidth extends Observable <IWidthPx, BrowserClientWidthChanged
     }
 
     /**
+     * Notify subscribers about changes;
+     */
+    public notify(): void {
+
+        if(this.state instanceof ModifiedBrowserClientWidthState) {
+            this.state.notify();
+        }
+    }
+
+    /**
      * Creates Event class object that will be sent to subscribers.
      *
      * @return {BrowserClientWidthChanged}
      * @override
      */
     protected createEvent(): BrowserClientWidthChanged {
-
-        const newClientWidth: IWidthPx = {...this.state.new};
-        const oldClientWidth: IWidthPx = {...this.state.old};
-
-        //TODO: Создать Фабрику событий. Заменить BrowserClientWidthChanged
-        return (new BrowserClientWidthChanged(newClientWidth, oldClientWidth));
+        return this.state.createEvent();
     }
 
     /**
